@@ -1,0 +1,149 @@
+---
+
+# Playbook to set up SNMPv3 with ansible on Linux.
+
+- name: Configure SNMPv3
+  hosts: linux
+  become: true
+  become_method: sudo
+  gather_facts: false
+
+  tasks:
+    - name: Install SNMP packages
+      apt: name=snmpd state=latest
+
+    - name: Put snmp.conf in place
+      template:
+        src: snmp.conf.j2
+        dest: /etc/snmp/snmp.conf
+
+    - name: Put snmpd.conf in place
+      template:
+        src: snmpd.conf.j2
+        dest: /etc/snmp/snmpd.conf        
+
+    - name: Create ~/.snmp/
+      shell:
+        cmd: mkdir -p ~/.snmp
+
+    - name: Put .../.snmp/snmp.conf in place
+      template:
+        src: snmp_credentials.conf.j2
+        dest: '~/.snmp/snmp.conf'
+
+    - name: Restart snmpd service
+      action: service name=snmpd state=restarted
+
+
+# --- DEBUG: Deleting users, otherwise the user keeps using the old password when re-running the script.
+    - name: Remove sb user from snmpusm
+      shell:
+        cmd: snmpusm localhost delete sb
+# ---
+
+
+    # Create user 'sb' from template 'temp_user'.
+    - name: Create snmp user
+      shell:
+        cmd: snmpusm -u temp_user -l authPriv -a MD5 -x DES -A {{ snmp_pass }} -X {{ snmp_pass }} localhost create {{ snmp_username }} temp_user
+      
+#    - name: Remove temporary user from conf (1/2)
+#      shell:
+#        cmd: sed -i "s/createUser temp_user MD5 {{ snmp_pass }} DES//" /etc/snmp/snmpd.conf
+        
+#    - name: Remove temporary user from conf (2/2)
+#      shell:
+#        cmd: sed -i "s/rwuser temp_user priv//" /etc/snmp/snmpd.conf
+
+#    - name: Restart snmpd service
+#      action: service name=snmpd state=restarted
+
+#    - name: Remove temp user from snmpusm
+#      shell:
+#        cmd: snmpusm localhost delete temp_user
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Configure SNMPv3 on Linux Client
+  hosts: linux
+  remote_user: sb
+  become: true
+  become_method: sudo
+
+  vars:
+    client_ip: 10.0.1.29
+    name: sb
+    auth_pass: sbsb2023
+    priv_pass: sbsb2023
+
+  tasks:
+  - name: Install SNMP packages
+    apt:
+      name:
+        - snmp
+        - snmpd
+      state: present
+
+
+  - name: Put snmp.conf in place
+    template:
+      src: /home/sb/automated_network_manager/templates/snmp.conf.j2
+      dest: /etc/snmp/snmp.conf
+
+
+  - name: Put snmpd.conf in place
+    template:
+      src: /home/sb/automated_network_manager/templates/snmpd.conf.j2
+      dest: /etc/snmp/snmpd.conf
+
+
+  - name: Grant SNMPv3 user access
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^rouser"
+      line: "rouser {{ snmp_username }}"
+
+    
+  - name: Grant SNMPv3 user access
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^rouser"
+      line: "rouser {{ snmp_username }}"
+
+
+  - name: Add SNMPv3 user to configuration file
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      line: "createUser {{ snmp_username }} MD5 {{ snmp_pass }} DES {{ snmp_pass }} authPriv"
+      state: present
+
+
+  - name: Restart snmpd service
+    action: service name=snmpd state=restarted
+
+
+  - name: Remove SNMPv3 user from configuration file
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^createUser {{ snmp_username }}.*$"
+      state: absent

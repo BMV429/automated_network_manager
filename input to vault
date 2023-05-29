@@ -1,0 +1,61 @@
+- name: Create Ansible Vault
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: no
+  vars_prompt:
+    - name: 'vault_password_1'
+      prompt: 'Enter password for secret 1:'
+      private: yes
+    - name: 'vault_password_2'
+      prompt: 'Enter password for secret 2:'
+      private: yes
+    - name: 'secret_value_1'
+      prompt: 'Enter a secret value to encrypt for secret 1:'
+      private: yes
+    - name: 'secret_value_2'
+      prompt: 'Enter a secret value to encrypt for secret 2:'
+      private: yes
+
+  tasks:
+    - name: Create ansible.cfg with [defaults]
+      copy:
+        dest: /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/ansible.cfg
+        content: |
+          [defaults]
+          # Add your default options here
+
+    - name: Create vault file
+      copy:
+        content: ""
+        dest: "secrets.yml"
+        mode: "0600"
+
+    - name: Add vault password to ansible.cfg
+      lineinfile:
+        path: "{{ ansible_config_file }}"
+        line: "vault_password_file = .ansible_vault_password_1"
+        state: present
+
+    - name: Create vault password file for secret 1
+      copy:
+        content: "{{ vault_password_1 }}"
+        dest: ".ansible_vault_password_1"
+        mode: "0600"
+        
+            - name: Encrypt secret 1 using vault
+      environment:
+        ANSIBLE_CONFIG: /path/to/ansible.cfg
+      shell: 'ansible-vault encrypt_string "{{ secret_value_1 }}" --name "my_secret_1" --encrypt-vault-id default --vault-password-file=".ansible_vault_password_1" >> secrets.y>
+    - name: Create vault password file for secret 2
+      copy:
+        content: "{{ vault_password_2 }}"
+        dest: ".ansible_vault_password_2"
+        mode: "0600"
+
+    - name: Encrypt secret 2 using vault
+      environment:
+        ANSIBLE_CONFIG: /path/to/ansible.cfg
+      shell: 'ansible-vault encrypt_string "{{ secret_value_2 }}" --name "my_secret_2" --encrypt-vault-id default --vault-password-file=".ansible_vault_password_1" >> secrets.y>
+    - name: Print vault contents
+      command: 'cat secrets.yml'

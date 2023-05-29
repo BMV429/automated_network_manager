@@ -1,0 +1,58 @@
+[
+]
+	{
+		"targets": ["10.0.0.5"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.1"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.2"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.3"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.23"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.22"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.21"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.0"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.0.255"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.1.1"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.1.30"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.1.32"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.1.31"],
+		"labels": {"job": "node"}
+	},
+	{
+		"targets": ["10.0.1.25"],
+		"labels": {"job": "node"}
+	}

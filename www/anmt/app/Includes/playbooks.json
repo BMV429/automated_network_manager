@@ -1,0 +1,110 @@
+[
+    {
+    "name":"Test playbook",
+    "path":"playbooktest.yml",
+    "variables":"",
+    "arguments":""
+    },
+    {
+    "name":"Change DNS (Linux\/Host)",
+    "path":"Linuxdnssingle.yml",
+    "variables":"client_ip, dns_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Change DNS (Linux\/Multi)",
+    "path":"Linuxdnsmulti.yml",
+    "variables":"dns_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Change DNS (Cisco\/Host)",
+    "path":"Ciscodnssingle.yml",
+    "variables":"client_ip, dns_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Change DNS (Cisco\/Multi)",
+    "path":"Ciscodnsmulti.yml",
+    "variables":"dns_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Change DNS (Cisco Nexus)",
+    "path":"Nexusdnssingle.yml",
+    "variables":"client_ip, dns_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add SNMP user (Linux\/Host)",
+    "path":"Linuxsnmpsingle.yml",
+    "variables":"snmp_username, snmp_pass, client_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add SNMP user (Linux\/Multi)",
+    "path":"Linuxsnmpmulti.yml",
+    "variables":"snmp_username, snmp_pass, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add SNMP user (Cisco\/Host)",
+    "path":"Ciscosnmpsingle.yml",
+    "variables":"user, group, authpass, privpass, client_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add SNMP user (Cisco\/Multi)",
+    "path":"Ciscosnmpmulti.yml",
+    "variables":"user, group, authpass, privpass, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add SNMP user (Cisco Nexus)",
+    "path":"Nexussnmpsingle.yml",
+    "variables":"user, group, authpass, privpass, client_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Enable syslog client (Linux\/Host)",
+    "path":"Linuxrsyslogsingle.yml",
+    "variables":"client_ip, syslog_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Enable syslog client (Linux\/Multi)",
+    "path":"Linuxrsyslogmulti.yml",
+    "variables":"syslog_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Enable syslog client (Cisco\/Host)",
+    "path":"Ciscorsyslogsingle.yml",
+    "variables":"client_ip, ansible_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Enable syslog client (Cisco\/Multi)",
+    "path":"Ciscorsyslogmulti.yml",
+    "variables":"ansible_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Enable syslog client (Cisco Nexus)",
+    "path":"Nexusrsyslogsingle.yml",
+    "variables":"client_ip, ansible_server_ip, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Edit VLANs (Cisco Nexus)",
+    "path":"Nexusvlansingle.yml",
+    "variables":"client_ip, interface1, vlan_id, vlan_ip_address, vlan_mask, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    },
+    {
+    "name":"Add VLAN trunk (Cisco Nexus)",
+    "path":"Nexustrunksingle.yml",
+    "variables":"client_ip, interface1, vlan_id, ansible_ssh_user, ansible_ssh_pass, ansible_become_password",
+    "arguments":""
+    }
+]

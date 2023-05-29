@@ -1,0 +1,20 @@
+{"status":"success",
+    "data":
+        {
+            "resultType":"vector",
+            "result":[
+                {
+                    "metric":{
+                        "__name__":"sysName",
+                        "instance":"10.0.0.1",
+                        "job":"node",
+                        "sysName":"pfSenseone.home.arpa"
+                    },
+                    "value":[1685363689.234,"1"]
+                },
+                {
+                "metric":{
+                            "__name__":"sysName",
+                            "instance":"10.0.0.2",
+                            "job":"node",
+                            "sysName":"DESKTOP-9J2TPHN"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.0.3","job":"node","sysName":"WIN-client2"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.0.5","job":"node","sysName":"R1.rtp.cisco.com"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.1.1","job":"node","sysName":"R1.rtp.cisco.com"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.1.25","job":"node","sysName":"ansibleserver"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.1.35","job":"node","sysName":"sb"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.2.1","job":"node","sysName":"R1.rtp.cisco.com"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.5.1","job":"node","sysName":"R1.rtp.cisco.com"},"value":[1685363689.234,"1"]},{"metric":{"__name__":"sysName","instance":"10.0.5.2","job":"node","sysName":"R-C"},"value":[1685363689.234,"1"]}]}}

@@ -1,0 +1,26 @@
+    - name: Install latest rsyslog version
+      apt: name=rsyslog state=latest
+
+    - name: Create log directory
+      shell:
+        cmd: mkdir -p /var/log/remote_logs
+
+    - name: Change ownership of log dir
+      shell:
+        cmd: sudo chown -R root:adm /var/log/remote_logs
+
+    - name: Start rsyslog service
+      action: service name=rsyslog state=started
+
+    - name: Enable rsyslog service on boot
+      action: service name=rsyslog enabled=yes
+
+    - name: Put manual.conf in place
+      template:
+        src: /home/sb/automated_network_manager/templates/rsyslog_master.conf.j2
+        dest: /etc/rsyslog.d/manual_master.conf
+
+    - name: Restart rsyslog service
+      action: service name=rsyslog state=restarted
+
+

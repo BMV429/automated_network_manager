@@ -1,0 +1,82 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "file-discover-job-cisco"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetcisco.json'
+
+    metrics_path: /snmp
+    params:
+      module: [cisco]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+
+  - job_name: "file-discover-job-linux"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetlinux.json'
+
+    metrics_path: /snmp
+    params:
+      module: [linux]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+  - job_name: "file-discover-job-windows"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetwindows.json'
+
+    metrics_path: /snmp
+    params:
+      module: [windows]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+  - job_name: "file-discover-job-pfsense"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetpfsense.json'
+
+    metrics_path: /snmp
+    params:
+      module: [pfsense]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port

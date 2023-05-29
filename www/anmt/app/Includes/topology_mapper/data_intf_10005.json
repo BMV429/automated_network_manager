@@ -1,0 +1,136 @@
+{
+    "ietf-interfaces:interfaces-state": {
+        "interface": [
+            {
+                "name": "GigabitEthernet1",
+                "type": "iana-if-type:ethernetCsmacd",
+                "admin-status": "up",
+                "oper-status": "up",
+                "last-change": "2023-04-21T07:39:19.291+00:00",
+                "if-index": 1,
+                "phys-address": "00:50:56:ac:ad:dd",
+                "speed": "1000000000",
+                "statistics": {
+                    "discontinuity-time": "2023-04-21T07:33:25+00:00",
+                    "in-octets": "22241111491",
+                    "in-unicast-pkts": "98182627",
+                    "in-broadcast-pkts": "0",
+                    "in-multicast-pkts": "0",
+                    "in-discards": 0,
+                    "in-errors": 0,
+                    "in-unknown-protos": 0,
+                    "out-octets": "1249187982",
+                    "out-unicast-pkts": "53922045",
+                    "out-broadcast-pkts": "0",
+                    "out-multicast-pkts": "0",
+                    "out-discards": 0,
+                    "out-errors": 0
+                }
+            },
+            {
+                "name": "GigabitEthernet2",
+                "type": "iana-if-type:ethernetCsmacd",
+                "admin-status": "up",
+                "oper-status": "up",
+                "last-change": "2023-04-21T07:35:28.912+00:00",
+                "if-index": 2,
+                "phys-address": "00:50:56:ac:f9:27",
+                "speed": "1000000000",
+                "statistics": {
+                    "discontinuity-time": "2023-04-21T07:33:25+00:00",
+                    "in-octets": "15550106236",
+                    "in-unicast-pkts": "52008441",
+                    "in-broadcast-pkts": "0",
+                    "in-multicast-pkts": "0",
+                    "in-discards": 0,
+                    "in-errors": 0,
+                    "in-unknown-protos": 0,
+                    "out-octets": "3841882950",
+                    "out-unicast-pkts": "58322532",
+                    "out-broadcast-pkts": "0",
+                    "out-multicast-pkts": "0",
+                    "out-discards": 284936,
+                    "out-errors": 0
+                }
+            },
+            {
+                "name": "GigabitEthernet3",
+                "type": "iana-if-type:ethernetCsmacd",
+                "admin-status": "up",
+                "oper-status": "up",
+                "last-change": "2023-04-21T07:35:28.912+00:00",
+                "if-index": 3,
+                "phys-address": "00:50:56:ac:b3:e5",
+                "speed": "1000000000",
+                "statistics": {
+                    "discontinuity-time": "2023-04-21T07:33:25+00:00",
+                    "in-octets": "2470857386",
+                    "in-unicast-pkts": "18104782",
+                    "in-broadcast-pkts": "0",
+                    "in-multicast-pkts": "0",
+                    "in-discards": 0,
+                    "in-errors": 0,
+                    "in-unknown-protos": 0,
+                    "out-octets": "257333691",
+                    "out-unicast-pkts": "1543114",
+                    "out-broadcast-pkts": "0",
+                    "out-multicast-pkts": "0",
+                    "out-discards": 0,
+                    "out-errors": 0
+                }
+            },
+            {
+                "name": "GigabitEthernet4",
+                "type": "iana-if-type:ethernetCsmacd",
+                "admin-status": "up",
+                "oper-status": "up",
+                "last-change": "2023-05-03T12:13:18.457+00:00",
+                "if-index": 4,
+                "phys-address": "00:50:56:ac:74:62",
+                "speed": "1000000000",
+                "statistics": {
+                    "discontinuity-time": "2023-04-21T07:33:25+00:00",
+                    "in-octets": "15617492",
+                    "in-unicast-pkts": "93681",
+                    "in-broadcast-pkts": "0",
+                    "in-multicast-pkts": "0",
+                    "in-discards": 0,
+                    "in-errors": 0,
+                    "in-unknown-protos": 0,
+                    "out-octets": "5183872",
+                    "out-unicast-pkts": "46815",
+                    "out-broadcast-pkts": "0",
+                    "out-multicast-pkts": "0",
+                    "out-discards": 0,
+                    "out-errors": 0
+                }
+            },
+            {
+                "name": "Loopback0",
+                "type": "iana-if-type:softwareLoopback",
+                "admin-status": "up",
+                "oper-status": "up",
+                "last-change": "2023-04-21T07:35:15.069+00:00",
+                "if-index": 7,
+                "phys-address": "00:1e:bd:d8:f2:00",
+                "speed": "8000000000",
+                "statistics": {
+                    "discontinuity-time": "2023-04-21T07:33:25+00:00",
+                    "in-octets": "0",
+                    "in-unicast-pkts": "0",
+                    "in-broadcast-pkts": "0",
+                    "in-multicast-pkts": "0",
+                    "in-discards": 0,
+                    "in-errors": 0,
+                    "in-unknown-protos": 0,
+                    "out-octets": "0",
+                    "out-unicast-pkts": "0",
+                    "out-broadcast-pkts": "0",
+                    "out-multicast-pkts": "0",
+                    "out-discards": 0,
+                    "out-errors": 0
+                }
+            }
+        ]
+    }
+}

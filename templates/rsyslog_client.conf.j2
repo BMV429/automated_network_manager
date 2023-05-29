@@ -1,0 +1,69 @@
+## --- /etc/rsyslog.d/general_client.conf ---
+## Format all log messages with this template before sending.
+template (
+    name="send_remote_logs"
+    type="string"
+    string="<%PRI%>%TIMESTAMP:::date-rfc3339% %HOSTNAME% %syslogtag:1:32%%msg:::sp-if-no-1st-sp%%msg%"
+)
+
+## Forward log messages using omfwd module.
+action(
+    type="omfwd"
+    Target="{{ syslog_server_ip }}"
+    Port="514"
+    Protocol="udp"
+    template="send_remote_logs"
+
+    queue.SpoolDirectory="/var/spool/rsyslog" 
+    queue.FileName="remote"         # Sets filename and enables disk mode.
+    queue.MaxDiskSpace="1g"         # Sets max. disk usage.
+    queue.SaveOnShutdown="on"       # Save in-memory data if rsyslog shuts down.
+    queue.Type="LinkedList"         # Use asynchronous processing.
+#    resume.RetryCount= "5"         # -1 = Infinite retries on insert failure. (Gives error -> unknown parameter)
+#    ResendLastMSGOnReconnect="on"   # ?
+)
+
+
+## Only send logs for the sshd application. (put in /etc/rsyslog.d/50-sshd.conf)
+#if $programname == "sshd" then {
+#        action(type="omfwd" target="{{ syslog_server_ip }}" port="514" protocol="udp" template="send_remote")
+#        stop
+#}
+
+
+## --- /etc/rsyslog.d/50-apache.conf ---
+## define global workDirectory for saving the state file of log messages.
+#global(workDirectory="/var/spool/rsyslog")
+
+## enable the Rsyslog imfile module processing text files or logs.
+#module(load="imfile" PollingInterval="10")
+
+
+## define ruleset "ApacheLogs" with action object to send logs to rsyslog server
+## define the queue
+#ruleset(name="apache_logs") {
+#    action(
+#        type="omfwd"
+#        target="{{ syslog_server_ip }}"
+#        port="514"
+#        protocol="udp"
+#        template="send_remote_logs"
+
+#        queue.SpoolDirectory="/var/spool/rsyslog"
+#        queue.FileName="remote"
+#        queue.MaxDiskSpace="1g"
+#        queue.SaveOnShutdown="on"
+#        queue.Type="LinkedList"
+#        ResendLastMSGOnReconnect="on"
+#        )
+
+        # Stop process after file is written.
+#        stop
+#}
+
+# define input files Apache2 logs to send to the Rsyslog server
+# and apply ruleset "apache_logs"
+#input(type="imfile" ruleset="apache_logs" Tag="apache2" File="/var/log/apache2/*.log")
+
+# Stop process after file is written.
+#stop

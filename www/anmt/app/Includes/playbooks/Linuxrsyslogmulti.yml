@@ -1,0 +1,42 @@
+---
+
+# Playbook that deploys the rsyslog configuration.
+
+- name: Deploy syslog client config (Linux)
+  hosts: localhost
+  become: true
+  become_method: sudo
+  gather_facts: yes
+    
+  tasks:
+    - name: Install latest rsyslog version
+      apt: name=rsyslog state=latest
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['Linux'] }}"
+      run_once: true
+
+    - name: Start rsyslog service
+      action: service name=rsyslog state=started
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['Linux'] }}"
+      run_once: true
+
+    - name: Enable rsyslog service on boot
+      action: service name=rsyslog enabled=yes
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['Linux'] }}"
+      run_once: true
+
+    - name: Put manual_client.conf in place
+      template:
+        src: /home/sb/automated_network_manager/templates/rsyslog_client.conf.j2
+        dest: /etc/rsyslog.d/manual_client.conf
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['Linux'] }}"
+      run_once: true  
+
+    - name: Restart rsyslog service
+      action: service name=rsyslog state=restarted
+      delegate_to: "{{ item }}"
+      with_items: "{{ groups['Linux'] }}"
+      run_once: true

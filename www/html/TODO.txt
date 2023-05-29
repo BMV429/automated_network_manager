@@ -1,0 +1,47 @@
+X - fix write json to file
+X - put square brackets around json.
+X - put IPv4 and MAC as lists in host array.
+X - fix READ json from file ... I can write an list of hosts properly, but every method of reading a file fails for some reason.
+X   execute python scripts with php.
+X   show table with all found devices.
+    Fix topology maker
+        It shows old hosts sometimes
+        It gives an error when the manual_hosts.json file is completely empty
+        The webui uses instance IP for port ...
+
+
+// what we did to fix it
+		// put fff_user in sudoers file
+		// added 'w' as file operator.
+		// used shell_exec instead of exec
+		// create fff_user home dir
+		// for the topology script: remove the icon paths -> could not find them.
+		// then it works.
+
+
+
+		#echo $shell_output; // DEBUGGING.
+
+		
+
+		#$touch_cmd = "python3 /home/sb/automated_network_manager/network_scan/hello_world.py";
+		#$shell_output = shell_exec($touch_cmd);
+		#echo $shell_output;
+
+        
+		#$command_update_hosts = "ansible-playbook /var/www/locall/html/playbooktest.yml";
+		#$command_update_topology = "touch /var/www/locall/html/test343234.txt 2>&1";
+        		#$command_update_topology = "touch /var/www/locall/html/test343234.txt 2>&1";
+
+
+	When opening files:
+		#(Do chmod 777 upon permission errors)
+		#$hosts_file_pointer = @fopen('manual_hosts.json', 'w') or die(print_r(error_get_last(), true)); // DEBUG
+
+
+	#populate_devices_table();
+
+	//var_dump($_POST);
+	//var_dump($_SERVER);
+	
+	# $status = store_device_data();

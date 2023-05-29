@@ -1,0 +1,34 @@
+{
+    "Cisco-IOS-XE-native:ip": {
+        "forward-protocol": {
+            "protocol": "nd"
+        },
+        "name-server": {
+            "no-vrf": [
+                "8.8.4.4"
+            ]
+        },
+        "route": {
+            "ip-route-interface-forwarding-list": [
+                {
+                    "prefix": "0.0.0.0",
+                    "mask": "0.0.0.0",
+                    "fwd-list": [
+                        {
+                            "fwd": "10.0.5.1"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Cisco-IOS-XE-http:http": {
+            "authentication": {
+                "aaa": {
+                    "login-authentication": "HTTP"
+                }
+            },
+            "server": true,
+            "secure-server": true
+        }
+    }
+}

@@ -1,0 +1,23 @@
+- name: Example playbook with user input for host
+  hosts: linux
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    ansible_become_password: sb
+#  vars_prompt:
+#    - name: target_password
+#      prompt: "Enter the password for the target system:"
+#    - name: dns_server_ip
+#      prompt: "Enter the DNS server IP address: "
+#      private: no
+
+  tasks:
+    - name: Replace DNS server IP address
+      replace:
+        path: /tmp/localhost/etc/netplan/00-installer-config.yaml
+        regexp: 'addresses:\s+-\s+\b(?!.*\/)\d+\.\d+\.\d+\.\d+\b'
+        replace: "addresses:\n        - {{ dns_server_ip }}"
+
+    - name: Apply network configuration
+      command: netplan apply

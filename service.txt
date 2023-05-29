@@ -1,0 +1,18 @@
+[Unit]
+Description=Monitoring system and time series database
+Documentation=https://prometheus.io/docs/introduction/overview/
+
+[Service]
+Restart=always
+User=prometheus
+EnvironmentFile=/etc/default/prometheus
+ExecStart=/usr/bin/prometheus $ARGS \
+    --storage.tsdb.path=/home/sb/prometheusdata \
+    --storage.tsdb.retention.time=1y
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target

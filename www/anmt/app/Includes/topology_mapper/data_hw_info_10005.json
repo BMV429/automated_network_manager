@@ -1,0 +1,59 @@
+{
+    "Cisco-IOS-XE-device-hardware-oper:device-inventory": [
+        {
+            "hw-type": "hw-type-chassis",
+            "hw-dev-index": 0,
+            "version": "V00",
+            "part-number": "C8000V",
+            "serial-number": "960Z4COHBKI",
+            "hw-description": "Cisco Catalyst 8000V Edge Chassis",
+            "dev-name": "Chassis",
+            "field-replaceable": false,
+            "hw-class": "hw-class-physical"
+        },
+        {
+            "hw-type": "hw-type-pim",
+            "hw-dev-index": 1,
+            "version": "V00",
+            "part-number": "C8000V",
+            "serial-number": "JAB1303001C",
+            "hw-description": "Cisco Catalyst 8000V Edge Route Processor",
+            "dev-name": "module R0",
+            "field-replaceable": false,
+            "hw-class": "hw-class-virtual"
+        },
+        {
+            "hw-type": "hw-type-pim",
+            "hw-dev-index": 2,
+            "version": "",
+            "part-number": "C8000V",
+            "serial-number": "",
+            "hw-description": "Cisco Catalyst 8000V Edge Embedded Services Processor",
+            "dev-name": "module F0",
+            "field-replaceable": false,
+            "hw-class": "hw-class-virtual"
+        },
+        {
+            "hw-type": "hw-type-dram",
+            "hw-dev-index": 3,
+            "version": "",
+            "part-number": "",
+            "serial-number": "",
+            "hw-description": "Physical Memory",
+            "dev-name": "Memory",
+            "field-replaceable": false,
+            "hw-class": "hw-class-physical"
+        },
+        {
+            "hw-type": "hw-type-cpu",
+            "hw-dev-index": 4,
+            "version": " 6",
+            "part-number": " GenuineIntel",
+            "serial-number": "",
+            "hw-description": " Intel(R) Xeon(R) CPU E5-2660 v3 @ 2.60",
+            "dev-name": "CPU",
+            "field-replaceable": false,
+            "hw-class": "hw-class-physical"
+        }
+    ]
+}

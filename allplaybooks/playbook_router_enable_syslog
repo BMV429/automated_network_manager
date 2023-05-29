@@ -1,0 +1,35 @@
+---
+- name: Enable syslog logging on Cisco router
+  hosts: localhost
+  gather_facts: no
+#  vars_prompt:
+#    - name: "to"
+#      prompt: "Enter the Switch/Router IP that you want to change."
+#      private: no
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_user: cisco
+    ansible_password: cisco
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: cisco
+    ansible_server_ip: '10.0.1.25' #"{{ ansible_facts['ansible_default_ipv4.address'] }}"
+
+  tasks:
+# https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
+#    - name: Get Ansible server IP address
+#      set_fact:
+#        ansible_server_ip: "{{ ansible_default_ipv4.address }}"
+
+#    - name Get Ansible server IP address
+#      ansible.builtin.debug:
+#        var: ansible_facts
+        
+    - name: Enable logging
+      ios_config:
+        lines:
+          - "logging host {{ ansible_server_ip }}"
+          - "logging source-interface Loopback 0"
+          - "logging trap debugging" # Change to notification or whatever later.
+      delegate_to: "{{ to }}"

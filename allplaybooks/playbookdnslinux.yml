@@ -1,0 +1,48 @@
+- name: Example playbook with user input for host
+  hosts: localhost
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    ansible_become_password: sb
+    gateway: 10.0.1.1
+  vars_prompt:
+    - name: hostname
+      prompt: "Enter the hostname that needs to be changed:"
+    - name: target_password
+      prompt: "Enter the password for the target system:"
+    - name: dns_server
+      prompt: "Enter the dns server you want to use:"  
+
+  tasks:
+    - name: SSH into remote host and execute command
+      shell: whoami
+      delegate_to: "{{ hostname }}"
+      become: true
+      vars:
+        ansible_password: "{{ target_password }}"
+        ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
+
+    - name: add subnet mqsk to var
+      set_fact:
+        network: "{{ hostname }}/24"    
+
+    - name: Generate netplan configurqtion file
+      template:
+        src: /home/sb/netplan.yaml.j2
+        dest: /etc/netplan/00-installer-config.yaml
+      delegate_to: "{{ hostname }}"  
+
+    - name: Apply network configuration
+      shell: netplan apply
+      delegate_to: "{{ hostname }}"  
+
+
+[router]
+R1 ansible_host=10.0.0.5
+
+[routers:vars]
+ansible_network_os=ios
+ansible_user=cisco
+ansible_password=cisco
+ansible_connection=network_cli 

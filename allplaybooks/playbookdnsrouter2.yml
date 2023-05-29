@@ -1,0 +1,23 @@
+---
+- name: Change DNS server on Cisco router
+  hosts: IOS
+  gather_facts: no
+  vars_prompt:
+    - name: "dns"
+      prompt: "Enter the new dnsserver"
+      private: no
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_user: cisco
+    ansible_password: cisco
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: cisco
+
+  tasks:
+    - name: configure name servers
+      cisco.ios.ios_system:
+        name_servers:
+        - "{{ dns }}"

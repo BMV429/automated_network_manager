@@ -1,0 +1,159 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    scrape_interval: 5s
+
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "file-discover-job-cisco"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetcisco.json'
+
+    metrics_path: /snmp
+    params:
+      module: [cisco]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+
+  - job_name: "file-discover-job-linux"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetlinux.json'
+
+    metrics_path: /snmp
+    params:
+      module: [linux]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+  - job_name: "file-discover-job-windows"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetwindows.json'
+
+    metrics_path: /snmp
+    params:
+      module: [windows]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+
+  - job_name: "file-discover-job-pfsense"
+
+    file_sd_configs:
+      - files:
+        - '/etc/prometheus/targetpfsense.json'
+
+    metrics_path: /snmp
+    params:
+      module: [pfsense]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.26:9116 # The SNMP exporter's real hostname:port
+        
+        
+        
+        ansible_become_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63666664653530363163373634613639393530643761386333393237626633366339623665646366
+          6632376436653034386539383337623737316632356233330a656638343238633662616461306537
+          36633563663664353936343739316336666465346165303530373362346162326464323261306539
+          6131616434353462350a326638353735393933623832313833643231383937373963636266643934
+          3261
+          
+        my_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63656331356631386638333131393732346537306633356262666632633265393238386538366464
+          3537373030326363316137636139643666346636633030300a353066643566333263646564343830
+          31663835333131616463363932663733333965636337633363663635613339643133616631326332
+          3031313130633435630a336234386632626532656639326465396266373635313162663937373030
+          3932
+          
+        ciscopass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61323636656132316634616465353366356564373861633464623235636164663563643631663065
+          6632336537336137313262346537636234306362393530380a316332643665356561353962376163
+          34666236353931396334643237376639303932663538306237343864393635396266663136343666
+          6137393162333461320a643266343466333166633565333337393833356538623039366437333935
+          3435
+          
+          
+my_pass2: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32653337633534656139653136383632323337396534393339643738656338353866343533306666
+          6530666131366430356231663437353638636338313030610a363939623939326663626430343966
+          65633761373731653963643961313237623235643339316335663062386563356662623739636538
+          3434336262396561370a303964303034666266656130306638383036373165656463313532303235
+          3637
+
+          
+---
+  name: Add IPs to a list
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    ip_dict: {}
+    ip_list: []
+
+  tasks:
+    - name: Prompt user for number of IP addresses
+      ansible.builtin.pause:
+        prompt: "How many IP addresses would you like to enter? "
+      register: num_ips_input
+
+    - name: Loop over IP addresses
+      ansible.builtin.set_fact:
+        ip_dict["{{ item }}"]: ""
+      with_sequence: count="{{ num_ips_input.user_input | int }}"
+      register: loop_result
+
+    - name: Prompt user for IP address
+      ansible.builtin.set_fact:
+        ip_dict["{{ loop_result.item }}"]: "{{ ip_input.user_input }}"
+      loop: "{{ ip_dict.keys() | list }}"
+      loop_control:
+        label: "{{ item }}"
+
+    - name: Prompt user for IP address {{ loop_control.label }}
+      ansible.builtin.pause:
+        prompt: "Please enter IP address {{ loop_control.label }}: "
+      register: ip_input
+
+    - name: Add IP to list
+      set_fact:
+        ip_list: "{{ ip_list + [ip_dict[item]] }}"
+
+    - name: Display IP list
+      debug:
+        var: ip_list

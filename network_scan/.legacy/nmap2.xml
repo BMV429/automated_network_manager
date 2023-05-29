@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Thu Feb 23 13:33:57 2023 as: nmap -sU -O -oX /home/sb/nmap2.xml -p161 -&#45;script snmp-brute -&#45;script-args snmplist=community.lst 10.0.1.0/24 -->
+<nmaprun scanner="nmap" args="nmap -sU -O -oX /home/sb/nmap2.xml -p161 -&#45;script snmp-brute -&#45;script-args snmplist=community.lst 10.0.1.0/24" start="1677159237" startstr="Thu Feb 23 13:33:57 2023" version="7.92" xmloutputversion="1.05">
+<scaninfo type="udp" protocol="udp" numservices="1" services="161"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.1" addrtype="ipv4"/>
+<address addr="00:50:56:AC:F9:27" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.30" addrtype="ipv4"/>
+<address addr="00:50:56:AC:0B:A6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.32" addrtype="ipv4"/>
+<address addr="00:50:56:AC:64:AE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.31" addrtype="ipv4"/>
+<address addr="00:50:56:AC:03:B1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1677159239" endtime="1677159242"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.1" addrtype="ipv4"/>
+<address addr="00:50:56:AC:F9:27" addrtype="mac" vendor="VMware"/>
+<hostnames>
+<hostname name="_gateway" type="PTR"/>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="255"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials&#xa;  private - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+<table>
+<elem key="password">private</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="39536"/>
+</os>
+<distance value="1"/>
+<times srtt="770" rttvar="406" to="100000"/>
+</host>
+<host starttime="1677159239" endtime="1677159241"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.30" addrtype="ipv4"/>
+<address addr="00:50:56:AC:0B:A6" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="closed" reason="port-unreach" reason_ttl="64"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="161"/>
+</os>
+<distance value="1"/>
+<times srtt="218" rttvar="120" to="100000"/>
+</host>
+<host starttime="1677159239" endtime="1677159241"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.31" addrtype="ipv4"/>
+<address addr="00:50:56:AC:03:B1" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="closed" reason="port-unreach" reason_ttl="64"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="161"/>
+</os>
+<distance value="1"/>
+<times srtt="108" rttvar="75" to="100000"/>
+</host>
+<host starttime="1677159239" endtime="1677159242"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.0.1.32" addrtype="ipv4"/>
+<address addr="00:50:56:AC:64:AE" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="64"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="35590"/>
+</os>
+<distance value="1"/>
+<times srtt="128" rttvar="146" to="100000"/>
+</host>
+<host starttime="1677159243" endtime="1677159244"><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="10.0.1.25" addrtype="ipv4"/>
+<hostnames>
+<hostname name="ansibleserver" type="PTR"/>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="closed" reason="port-unreach" reason_ttl="64"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="161"/>
+</os>
+<distance value="0"/>
+<times srtt="41" rttvar="169" to="100000"/>
+</host>
+<runstats><finished time="1677159244" timestr="Thu Feb 23 13:34:04 2023" summary="Nmap done at Thu Feb 23 13:34:04 2023; 256 IP addresses (5 hosts up) scanned in 7.46 seconds" elapsed="7.46" exit="success"/><hosts up="5" down="251" total="256"/>
+</runstats>
+</nmaprun>

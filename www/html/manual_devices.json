@@ -1,0 +1,35 @@
+[
+    {
+        "IPv4": "['10.0.5.3']",
+        "MAC": "['AA:BB:EE:33:DD:D3']",
+        "OS": "Windows",
+        "model": "C8000V",
+        "sn": "KLOIUDA",
+        "device_username": "notadmin",
+        "device_password": "probablyhashthis",
+        "connected_device_ip": "10.0.0.5",
+        "connected_device_port": "GigabitEthernet3"
+    },
+    {
+        "IPv4": "['10.0.5.6']",
+        "MAC": "['AA:BB:EE:C3:DD:D3']",
+        "OS": "Windows",
+        "model": "C8000V",
+        "sn": "KLOIUDA",
+        "device_username": "notadmin",
+        "device_password": "probablyhashthis",
+        "connected_device_ip": "10.0.0.5",
+        "connected_device_port": "GigabitEthernet3"
+    },
+    {
+        "IPv4": "['10.0.5.9']",
+        "MAC": "['AA:BB:EE:33:AD:D3']",
+        "OS": "Windows",
+        "model": "C8000V",
+        "sn": "KLOIUDA",
+        "device_username": "notadmin",
+        "device_password": "probablyhashthis",
+        "connected_device_ip": "10.0.0.5",
+        "connected_device_port": "GigabitEthernet3"
+    }
+]

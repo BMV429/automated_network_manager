@@ -1,0 +1,17 @@
+---
+- name: Change DNS server on Cisco router
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_become: yes
+    ansible_become_method: enable
+
+  tasks:
+    - name: Configure SNMPv3 user
+      ios_config:
+        lines:
+          - "snmp-server user {{ user }} {{ group }} v3 auth sha {{ authpass }} priv aes 128 {{ privpass }}"
+      delegate_to: "{{ client_ip }}"

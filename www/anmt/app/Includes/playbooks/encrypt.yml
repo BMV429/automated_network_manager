@@ -1,0 +1,48 @@
+- name: Create Ansible Vault
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: no
+  vars:
+    ansible_cfg_path: '/var/www/anmt/html/anmt/app/Includes/playbooks/ansible.cfg'
+  vars_prompt:
+    - name: 'vault_password'
+      prompt: 'Enter password for secret:'
+      private: yes
+    - name: 'secret_value_1'
+      prompt: 'Enter a secret value to encrypt for secret 1:'
+      private: yes
+      
+  tasks:
+    - name: Create ansible.cfg with [defaults]
+      copy:
+        dest: "{{ ansible_cfg_path }}"
+        content: |
+          [defaults]
+          # Add your default options here
+
+    - name: Create vault file
+      copy:
+        content: ""
+        dest: "secrets.yml"
+        mode: "0600"
+
+    - name: Add vault password to ansible.cfg
+      lineinfile:
+        path: "{{ ansible_cfg_path }}"
+        line: "vault_password_file = .ansible_vault_password"
+        state: present
+
+    - name: Create vault password file for secret 1
+      copy:
+        content: "{{ vault_password }}"
+        dest: ".ansible_vault_password"
+        mode: "0600"
+        
+    - name: Encrypt secret 1 using vault
+      environment:
+        ANSIBLE_CONFIG: "{{ ansible_cfg_path }}"
+      shell: 'ansible-vault encrypt_string "{{ secret_value_1 }}" --name "my_secret_1" --encrypt-vault-id default --vault-password-file=".ansible_vault_password" >> secrets.yml'
+      
+    - name: Print vault contents
+      command: 'cat secrets.yml'

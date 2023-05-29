@@ -1,0 +1,52 @@
+- name: Change dns server nexus switch
+  hosts: localhost
+  gather_facts: no 
+  
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: nxos
+    ansible_become: yes
+
+  tasks:
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - show run | include ignore-case name-server 
+      delegate_to: "{{ client_ip }}"
+      register: show_output     
+
+    - name: Create a file
+      copy:
+        dest: /home/anmt_user/SWITCHDNS2.TXT
+        content: "{{ show_output.stdout_lines }}"
+      delegate_to: localhost   
+
+    - name: Read file contents
+      ansible.builtin.slurp:
+        src: /home/anmt_user/SWITCHDNS2.TXT
+      register: file_contents
+
+    - name: Remove first and last 3 characters
+      ansible.builtin.replace:
+        path: /home/anmt_user/SWITCHDNS2.TXT
+        regexp: '^...|...$'
+        replace: ''
+        backup: yes
+      when: file_contents.content is defined
+
+    - name: Read file contents
+      slurp:
+        src: /home/anmt_user/SWITCHDNS2.TXT
+      register: file_contents
+
+    - name: Set variable
+      set_fact:
+        my_variable: "{{ file_contents['content'] | b64decode }}"      
+
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - conf t
+          - no {{ my_variable }}
+          - ip name-server {{ dns_server_ip }}
+      delegate_to: "{{ client_ip }}"      

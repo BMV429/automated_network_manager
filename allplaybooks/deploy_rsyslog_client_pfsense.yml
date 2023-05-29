@@ -1,0 +1,16 @@
+---
+
+# Playbook that deploys the rsyslog configuration.
+
+- name: Deploy syslog client config (PfSense)
+  hosts: freebsd
+  remote_user: sb
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    rsyslog_server_ip: '10.0.1.30'
+  tasks:
+    # TODO:
+    # Get PfSense config xml.
+    # Use regex to change it.

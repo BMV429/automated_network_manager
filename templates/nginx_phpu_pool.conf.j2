@@ -1,0 +1,15 @@
+[{{ domain_name }}_site]
+user = {{ domain_name }}_user
+group = {{ domain_name }}_user
+listen = /var/run/php_{{ domain_name }}_site.sock
+listen.owner = {{ domain_name }}_user
+listen.group = {{ domain_name }}_user
+php_admin_value[disable_functions] = 
+php_admin_flag[allow_url_fopen] = off
+; Choose how theprocess manager will control the number of child processes.
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.process_idle_timeout = 10s

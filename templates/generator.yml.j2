@@ -1,0 +1,133 @@
+modules:
+  # Default IF-MIB interfaces table with ifIndex.
+  if_mib:
+    walk: [sysUpTime, interfaces, ifXTable]
+    lookups:
+      - source_indexes: [ifIndex]
+        lookup: ifAlias
+      - source_indexes: [ifIndex]
+        # Uis OID to avoid conflict with PaloAlto PAN-COMMON-MIB.
+        lookup: 1.3.6.1.2.1.2.2.1.2 # ifDescr
+      - source_indexes: [ifIndex]
+        # Use OID to avoid conflict with Netscaler NS-ROOT-MIB.
+        lookup: 1.3.6.1.2.1.31.1.1.1.1 # ifName
+    overrides:
+      ifAlias:
+        ignore: true # Lookup metric
+      ifDescr:
+        ignore: true # Lookup metric
+      ifName:
+        ignore: true # Lookup metric
+      ifType:
+        type: EnumAsInfo
+        
+  linux:
+    walk:       # List of OIDs to walk. Can also be SNMP object names or specific instances.
+      - 1.3.6.1.2.1.2              # Same as "interfaces"
+      - sysUpTime                  # Same as "1.3.6.1.2.1.1.3"
+      - 1.3.6.1.2.1.31.1.1.1.6.40  # Instance of "ifHCInOctets" with index "40"
+
+    version: 3  # SNMP version to use. Defaults to 2.
+                # 1 will use GETNEXT, 2 and 3 use GETBULK.
+    max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                         # May need to be reduced for buggy devices.
+    retries: 3   # How many times to retry a failed request, defaults to 3.
+    timeout: 5s  # Timeout for each individual SNMP request, defaults to 5s.
+
+    auth:
+      # Community string is used with SNMP v1 and v2. Defaults to "public".
+      community: public
+
+      # v3 has different and more complex settings.
+      # Which are required depends on the security_level.
+      # The equivalent options on NetSNMP commands like snmpbulkwalk
+      # and snmpget are also listed. See snmpcmd(1).
+      username: user  # Required, no default. -u option to NetSNMP.
+      security_level: authPriv  # Defaults to noAuthNoPriv. -l option to NetSNMP.
+                                    # Can be noAuthNoPriv, authNoPriv or authPriv.
+      password: {{ snmp_pass }}  # Has no default. Also known as authKey, -A option to NetSNMP.
+                      # Required if security_level is authNoPriv or authPriv.
+      auth_protocol: MD5  # MD5, SHA, SHA224, SHA256, SHA384, or SHA512. Defaults to MD5. -a option to NetSNMP.
+                          # Used if security_level is authNoPriv or authPriv.
+      priv_protocol: DES  # DES, AES, AES192, or AES256. Defaults to DES. -x option to NetSNMP.
+                          # Used if security_level is authPriv.
+      priv_password: {{ snmp_pass }} # Has no default. Also known as privKey, -X option to NetSNMP.
+                               # Required if security_level is authPriv.
+      #context_name: context # Has no default. -n option to NetSNMP.
+                            # Required if context is configured on the device.
+
+
+  windows:
+    walk:       # List of OIDs to walk. Can also be SNMP object names or specific instances.
+      - 1.3.6.1.2.1.2              # Same as "interfaces"
+      - sysUpTime                  # Same as "1.3.6.1.2.1.1.3"
+      - 1.3.6.1.2.1.31.1.1.1.6.40  # Instance of "ifHCInOctets" with index "40"
+
+    version: 2  # SNMP version to use. Defaults to 2.
+                # 1 will use GETNEXT, 2 and 3 use GETBULK.
+    max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                         # May need to be reduced for buggy devices.
+    retries: 3   # How many times to retry a failed request, defaults to 3.
+    timeout: 5s  # Timeout for each individual SNMP request, defaults to 5s.
+
+    auth:
+      # Community string is used with SNMP v1 and v2. Defaults to "public".
+      community: public
+
+    
+  freebsd:
+    walk:       # List of OIDs to walk. Can also be SNMP object names or specific instances.
+      - 1.3.6.1.2.1.2              # Same as "interfaces"
+      - sysUpTime                  # Same as "1.3.6.1.2.1.1.3"
+      - 1.3.6.1.2.1.31.1.1.1.6.40  # Instance of "ifHCInOctets" with index "40"
+
+    version: 3  # SNMP version to use. Defaults to 2.
+                # 1 will use GETNEXT, 2 and 3 use GETBULK.
+    max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                         # May need to be reduced for buggy devices.
+    retries: 3   # How many times to retry a failed request, defaults to 3.
+    timeout: 5s  # Timeout for each individual SNMP request, defaults to 5s.
+
+    auth:
+      username: sb  # Required, no default. -u option to NetSNMP.
+      security_level: authPriv  # Defaults to noAuthNoPriv. -l option to NetSNMP.
+                                    # Can be noAuthNoPriv, authNoPriv or authPriv.
+      password: {{ snmp_pass }}  # Has no default. Also known as authKey, -A option to NetSNMP.
+                      # Required if security_level is authNoPriv or authPriv.
+      auth_protocol: MD5  # MD5, SHA, SHA224, SHA256, SHA384, or SHA512. Defaults to MD5. -a option to NetSNMP.
+                          # Used if security_level is authNoPriv or authPriv.
+      priv_protocol: DES  # DES, AES, AES192, or AES256. Defaults to DES. -x option to NetSNMP.
+                          # Used if security_level is authPriv.
+      priv_password: {{ snmp_pass }} # Has no default. Also known as privKey, -X option to NetSNMP.
+                               # Required if security_level is authPriv.
+      #context_name: context # Has no default. -n option to NetSNMP.
+                            # Required if context is configured on the device.  
+  
+  
+  cisco:
+    walk:       # List of OIDs to walk. Can also be SNMP object names or specific instances.
+      - 1.3.6.1.2.1.2              # Same as "interfaces"
+      - sysUpTime                  # Same as "1.3.6.1.2.1.1.3"
+      - 1.3.6.1.2.1.31.1.1.1.6.40  # Instance of "ifHCInOctets" with index "40"
+
+    version: 3  # SNMP version to use. Defaults to 2.
+                # 1 will use GETNEXT, 2 and 3 use GETBULK.
+    max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                         # May need to be reduced for buggy devices.
+    retries: 3   # How many times to retry a failed request, defaults to 3.
+    timeout: 5s  # Timeout for each individual SNMP request, defaults to 5s.
+
+    auth:
+      username: sb  # Required, no default. -u option to NetSNMP.
+      security_level: authPriv  # Defaults to noAuthNoPriv. -l option to NetSNMP.
+                                    # Can be noAuthNoPriv, authNoPriv or authPriv.
+      password: {{ snmp_pass }}  # Has no default. Also known as authKey, -A option to NetSNMP.
+                      # Required if security_level is authNoPriv or authPriv.
+      auth_protocol: SHA  # MD5, SHA, SHA224, SHA256, SHA384, or SHA512. Defaults to MD5. -a option to NetSNMP.
+                          # Used if security_level is authNoPriv or authPriv.
+      priv_protocol: AES  # DES, AES, AES192, or AES256. Defaults to DES. -x option to NetSNMP.
+                          # Used if security_level is authPriv.
+      priv_password: {{ snmp_pass }} # Has no default. Also known as privKey, -X option to NetSNMP.
+                               # Required if security_level is authPriv.
+      #context_name: context # Has no default. -n option to NetSNMP.
+                            # Required if context is configured on the device.

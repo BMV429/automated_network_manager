@@ -1,0 +1,41 @@
+---
+- name: Change DNS server on Cisco router
+  hosts: localhost
+  gather_facts: no
+  vars_prompt:
+    - name: "port"
+      prompt: "Enter the port"
+      private: no
+    - name: "allvlan"
+      prompt: "Enter the vlan"
+      private: no
+    - name: "navlan"
+      prompt: "Enter the vlan"
+      private: no
+    - name: "to"
+      prompt: "Enter the Switch/Router that you want to change"
+      private: no
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_user: cisco
+    ansible_password: cisco
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: cisco
+
+#make sure vlan exist use the vlan module
+
+  tasks:
+    - name: Configure SNMPv3 user
+  cisco.ios.ios_l2_interfaces:
+    config:
+    - name: "{{ port }}"
+      trunk:
+        allowed_vlans: "{{ allvlan }}"
+        native_vlan: "{{ navlan }}"
+        encapsulation: isl
+  state: replaced
+  delegate_to: "{{ to }}"
+

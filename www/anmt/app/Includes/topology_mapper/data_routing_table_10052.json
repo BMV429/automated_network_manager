@@ -1,0 +1,194 @@
+{
+    "ietf-routing:routing-state": {
+        "routing-instance": [
+            {
+                "name": "default",
+                "type": "ietf-routing:default-routing-instance",
+                "router-id": "0.0.0.0",
+                "routing-protocols": {
+                    "routing-protocol": [
+                        {
+                            "type": "ietf-routing:direct",
+                            "name": "0"
+                        },
+                        {
+                            "type": "ietf-routing:static",
+                            "name": "0"
+                        }
+                    ]
+                },
+                "ribs": {
+                    "rib": [
+                        {
+                            "name": "ipv4-default",
+                            "address-family": "ietf-routing:ipv4",
+                            "default-rib": false,
+                            "routes": {
+                                "route": [
+                                    {
+                                        "destination-prefix": "0.0.0.0/0",
+                                        "route-preference": 1,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "",
+                                            "next-hop-address": "10.0.5.1"
+                                        },
+                                        "source-protocol": "ietf-routing:static",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.5.0/24",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet1",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.5.2/32",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet1",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.6.0/24",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet2",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.6.1/32",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet2",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.7.0/24",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet3",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "10.0.7.1/32",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "GigabitEthernet3",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "ipv6-default",
+                            "address-family": "ietf-routing:ipv6",
+                            "default-rib": false
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "__Platform_iVRF:_ID00_",
+                "type": "ietf-routing:vrf-routing-instance",
+                "router-id": "0.0.0.0",
+                "interfaces": {
+                    "interface": [
+                        "LIIN0"
+                    ]
+                },
+                "routing-protocols": {
+                    "routing-protocol": [
+                        {
+                            "type": "ietf-routing:direct",
+                            "name": "0"
+                        }
+                    ]
+                },
+                "ribs": {
+                    "rib": [
+                        {
+                            "name": "ipv4-default",
+                            "address-family": "ietf-routing:ipv4",
+                            "default-rib": false,
+                            "routes": {
+                                "route": [
+                                    {
+                                        "destination-prefix": "192.168.1.4/30",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "LIIN0",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    },
+                                    {
+                                        "destination-prefix": "192.168.1.6/32",
+                                        "route-preference": 0,
+                                        "metric": 0,
+                                        "next-hop": {
+                                            "outgoing-interface": "LIIN0",
+                                            "next-hop-address": "0.0.0.0"
+                                        },
+                                        "source-protocol": "ietf-routing:direct",
+                                        "active": [
+                                            null
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "ipv6-default",
+                            "address-family": "ietf-routing:ipv6",
+                            "default-rib": false
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

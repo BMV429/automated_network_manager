@@ -1,0 +1,65 @@
+- name: Change dns server nexus switch
+  hosts: localhost
+  gather_facts: no 
+  
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: nxos
+    ansible_become: yes
+
+  tasks:
+    - name: Get previous vlan info
+      nxos_command: 
+        commands:
+          - "show run interface vlan {{ vlan_id }}"
+      delegate_to: "{{ client_ip }}"
+      register: show_output
+      ignore_errors: yes
+
+    - name: Create a file
+      copy:
+        dest: /home/anmt_user/vlaninfo.txt
+        content: "{{ show_output.stdout_lines }}"
+      delegate_to: localhost
+      ignore_errors: yes
+
+    - name: Get previous ethernet info 
+      nxos_command: 
+        commands:
+          - "show run interface ethernet {{ interface1 }}"
+      delegate_to: "{{ client_ip }}"
+      register: show_output
+
+    - name: Create a file
+      copy:
+        dest: /home/anmt_user/ethernetinfo.txt
+        content: "{{ show_output.stdout_lines }}"
+      delegate_to: localhost
+
+
+
+
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - conf t
+          - vlan {{ vlan_id }}
+          - name {{ vlan_id }}
+      delegate_to: "{{ client_ip }}"   
+
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - conf t
+          - interface vlan {{ vlan_id }}
+          - ip address {{ vlan_ip_address}} {{ vlan_mask }}
+      delegate_to: "{{ client_ip }}"               
+
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - conf t
+          - interface ethernet {{ interface1 }}
+          - switchport mode access
+          - switchport access vlan {{vlan_id}}
+      delegate_to: "{{ client_ip }}"  

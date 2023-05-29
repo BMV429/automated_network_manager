@@ -1,0 +1,58 @@
+- name: Configure SNMPv3 on Linux Client
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+
+  tasks:
+  - name: Install SNMP packages
+    apt:
+      name:
+        - snmp
+        - snmpd
+      state: present
+    delegate_to: "{{ client_ip }}"
+
+  - name: Put snmp.conf in place
+    template:
+      src: /home/sb/automated_network_manager/templates/snmp.conf.j2
+      dest: /etc/snmp/snmp.conf
+    delegate_to: "{{ client_ip }}"
+
+  - name: Put snmpd.conf in place
+    template:
+      src: /home/sb/automated_network_manager/templates/snmpd.conf.j2
+      dest: /etc/snmp/snmpd.conf
+    delegate_to: "{{ client_ip }}"
+
+  - name: Grant SNMPv3 user access
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^rouser"
+      line: "rouser {{ snmp_username }}"
+    delegate_to: "{{ client_ip }}"
+    
+  - name: Grant SNMPv3 user access
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^rouser"
+      line: "rouser {{ snmp_username }}"
+    delegate_to: "{{ client_ip }}"
+
+  - name: Add SNMPv3 user to configuration file
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      line: "createUser {{ snmp_username }} MD5 {{ snmp_pass }} DES {{ snmp_pass }} authPriv"
+      state: present
+    delegate_to: "{{ client_ip }}"
+
+  - name: Restart snmpd service
+    action: service name=snmpd state=restarted
+    delegate_to: "{{ client_ip }}"
+
+  - name: Remove SNMPv3 user from configuration file
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: "^createUser {{ snmp_username }}.*$"
+      state: absent
+    delegate_to: "{{ client_ip }}"

@@ -1,0 +1,83 @@
+---
+
+# Playbook to deploy webserver (nginx and php).
+
+- name: Deploy webserver
+  hosts: localhost
+  remote_user: sb
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    - domain_name: "anmt"
+    - web_dir: "/var/www/anmt"
+  tasks:
+    - name: Install latest nginx version
+      apt: name=nginx state=latest
+      
+    - name: Configure firewall
+      shell:
+        cmd: ufw allow 'Nginx HTTP'
+        
+    - name: Create webpage directory
+      shell:
+        cmd: mkdir -p "{{ web_dir }}"/html
+        
+    - name: Change permissions of web dir (1/2)
+      shell:
+        cmd: chown -R $USER:$USER "{{ web_dir }}"
+        
+    - name: Change permissions of web dir (2/2)
+      shell:
+        cmd: chmod -R 755 "{{ web_dir }}"
+        
+    - name: Place webserver files (index.html, ...)
+      copy:
+        src: /home/sb/automated_network_manager/www/html/*
+        dest: "/var/www/{{ domain_name }}/html/"
+   
+    
+    - name: Put /etc/nginx/sites-available/xxxx
+      template:
+        src: /home/sb/automated_network_manager/templates/anmt.j2
+        dest: "/etc/nginx/sites-available/{{ domain_name }}"
+      
+    - name: Create soft link for previous file
+      shell:
+        cmd: ln -s "/etc/nginx/sites-available/{{ domain_name }}"
+        
+    - name: Put /etc/nginx/nginx.conf
+      template:
+        src: /home/sb/automated_network_manager/templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        
+    - name: Restart nginx
+      action: service name=nginx state=restarted
+        
+    - name: Install latest php-fmp version
+      apt: name=php7.4-fpm state=latest
+
+# Did not change / use this template.
+#    - name: Put /etc/php/7.4/fpm/pool.d/www.conf
+#      template:
+#        src: /home/sb/automated_network_manager/templates/nginx_www.conf.j2
+#        dest: /etc/php/7.4/fpm/pool.d/www.conf
+        
+    - name: Add group
+      shell:
+        cmd: groupadd {{ domain_name }}_user
+        
+    - name: Add user
+      shell:
+        cmd: useradd -g {{ domain_name }}_user {{ domain_name }}_user
+        
+    - name: Put /etc/php/7.4/fpm/pool.d/phpu_pool.conf
+      template:
+        src: /home/sb/automated_network_manager/templates/nginx_phpu_pool.conf.j2
+        dest: /etc/php/7.4/fpm/pool.d/phpu_pool.conf
+        
+    - name: Restart php-fpm service
+      action: service name=php7.4-fpm state=restarted
+      
+    - name: Restart nginx service
+      action: service name=nginx state=restarted

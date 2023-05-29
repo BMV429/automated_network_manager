@@ -1,0 +1,8 @@
+markupsafe==2.0.1
+pyvis
+networkx
+pandas
+requests
+Pillow
+prometheus-client
+paramiko==2.6.0

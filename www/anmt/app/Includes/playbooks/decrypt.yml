@@ -1,0 +1,13 @@
+---
+- name: Use encrypted secret 1
+  hosts: localhost
+  vars_files:
+    - secrets.yml
+  tasks:
+    - name: run python script
+      shell: python3 /home/sb/automated_network_manager/topology_mapper/mapper_main.py 10.0.0.5 bram {{ my_secret_1 }}
+
+
+
+
+

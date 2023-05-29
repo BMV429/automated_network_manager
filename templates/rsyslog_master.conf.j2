@@ -1,0 +1,16 @@
+# /etc/rsyslog.d/manual_master.conf
+
+$ModLoad imudp
+$UDPServerRun 514
+
+# Template for remote incomming logs.
+template (
+    name="remote-logs"
+    type="string"
+    string="/var/log/remote_logs/%HOSTNAME%/%PROGRAMNAME%.log"
+)
+
+*.* -?remote-logs
+
+# Stop process after file is written.
+stop

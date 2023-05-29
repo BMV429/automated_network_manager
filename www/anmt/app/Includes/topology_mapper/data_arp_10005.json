@@ -1,0 +1,451 @@
+{
+    "Cisco-IOS-XE-arp-oper:arp-vrf": [
+        {
+            "vrf": "Default",
+            "arp-oper": [
+                {
+                    "address": "10.0.0.1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:27:05",
+                    "time": "2023-05-24T09:16:33.682+00:00"
+                },
+                {
+                    "address": "10.0.0.2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:62:50",
+                    "time": "2023-05-24T11:53:01.849+00:00"
+                },
+                {
+                    "address": "10.0.0.3",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:a3:ad",
+                    "time": "2023-05-24T09:39:59.848+00:00"
+                },
+                {
+                    "address": "10.0.0.5",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:ad:dd",
+                    "time": "2023-04-21T07:39:19.293+00:00"
+                },
+                {
+                    "address": "10.0.0.22",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:27.373+00:00"
+                },
+                {
+                    "address": "10.0.0.36",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:3b:90",
+                    "time": "2023-05-24T09:23:57.354+00:00"
+                },
+                {
+                    "address": "10.0.0.50",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:e2:6f",
+                    "time": "2023-05-24T11:53:06.939+00:00"
+                },
+                {
+                    "address": "10.0.0.98",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:f9:db",
+                    "time": "2023-05-24T11:53:08.601+00:00"
+                },
+                {
+                    "address": "10.0.0.138",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet1",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:d1:ef",
+                    "time": "2023-05-24T11:53:28.01+00:00"
+                },
+                {
+                    "address": "10.0.1.1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:f9:27",
+                    "time": "2023-04-21T07:35:25.642+00:00"
+                },
+                {
+                    "address": "10.0.1.25",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:69:6b",
+                    "time": "2023-05-24T11:53:09.723+00:00"
+                },
+                {
+                    "address": "10.0.1.26",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:27.611+00:00"
+                },
+                {
+                    "address": "10.0.1.29",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:26.927+00:00"
+                },
+                {
+                    "address": "10.0.1.30",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:0b:a6",
+                    "time": "2023-05-24T11:52:52.33+00:00"
+                },
+                {
+                    "address": "10.0.1.31",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:03:b1",
+                    "time": "2023-05-24T11:52:32.309+00:00"
+                },
+                {
+                    "address": "10.0.1.32",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:64:ae",
+                    "time": "2023-05-24T11:53:23.241+00:00"
+                },
+                {
+                    "address": "10.0.1.35",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:59:eb",
+                    "time": "2023-05-24T11:31:08.962+00:00"
+                },
+                {
+                    "address": "10.0.1.199",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet2",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:fd:dc",
+                    "time": "2023-05-24T11:52:49.075+00:00"
+                },
+                {
+                    "address": "10.0.2.1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet4",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:74:62",
+                    "time": "2023-05-04T08:38:45.389+00:00"
+                },
+                {
+                    "address": "10.0.2.99",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet4",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:91:73",
+                    "time": "2023-05-24T11:46:58.984+00:00"
+                },
+                {
+                    "address": "10.0.5.1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet3",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:b3:e5",
+                    "time": "2023-04-21T07:35:25.642+00:00"
+                },
+                {
+                    "address": "10.0.5.2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "interface": "GigabitEthernet3",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:b8:78",
+                    "time": "2023-05-24T09:33:47.066+00:00"
+                }
+            ],
+            "arp-entry": [
+                {
+                    "address": "10.0.0.1",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:27:05",
+                    "time": "2023-05-24T09:16:32.682+00:00"
+                },
+                {
+                    "address": "10.0.0.2",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:62:50",
+                    "time": "2023-05-24T11:53:00.849+00:00"
+                },
+                {
+                    "address": "10.0.0.3",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:a3:ad",
+                    "time": "2023-05-24T09:39:58.848+00:00"
+                },
+                {
+                    "address": "10.0.0.5",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:ad:dd",
+                    "time": "2023-04-21T07:39:18.293+00:00"
+                },
+                {
+                    "address": "10.0.0.22",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:26.373+00:00"
+                },
+                {
+                    "address": "10.0.0.36",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:3b:90",
+                    "time": "2023-05-24T09:23:56.354+00:00"
+                },
+                {
+                    "address": "10.0.0.50",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:e2:6f",
+                    "time": "2023-05-24T11:53:05.939+00:00"
+                },
+                {
+                    "address": "10.0.0.98",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:f9:db",
+                    "time": "2023-05-24T11:53:07.601+00:00"
+                },
+                {
+                    "address": "10.0.0.138",
+                    "interface": "GigabitEthernet1",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:d1:ef",
+                    "time": "2023-05-24T11:53:27.01+00:00"
+                },
+                {
+                    "address": "10.0.1.1",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:f9:27",
+                    "time": "2023-04-21T07:35:24.642+00:00"
+                },
+                {
+                    "address": "10.0.1.25",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:69:6b",
+                    "time": "2023-05-24T11:53:08.723+00:00"
+                },
+                {
+                    "address": "10.0.1.26",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:26.611+00:00"
+                },
+                {
+                    "address": "10.0.1.29",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-incomplete",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:00:00:00:00:00",
+                    "time": "2023-05-24T11:53:25.927+00:00"
+                },
+                {
+                    "address": "10.0.1.30",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:0b:a6",
+                    "time": "2023-05-24T11:52:51.33+00:00"
+                },
+                {
+                    "address": "10.0.1.31",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:03:b1",
+                    "time": "2023-05-24T11:52:31.309+00:00"
+                },
+                {
+                    "address": "10.0.1.32",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:64:ae",
+                    "time": "2023-05-24T11:53:22.241+00:00"
+                },
+                {
+                    "address": "10.0.1.35",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:59:eb",
+                    "time": "2023-05-24T11:31:07.962+00:00"
+                },
+                {
+                    "address": "10.0.1.199",
+                    "interface": "GigabitEthernet2",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:fd:dc",
+                    "time": "2023-05-24T11:52:48.075+00:00"
+                },
+                {
+                    "address": "10.0.2.1",
+                    "interface": "GigabitEthernet4",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:74:62",
+                    "time": "2023-05-04T08:38:44.389+00:00"
+                },
+                {
+                    "address": "10.0.2.99",
+                    "interface": "GigabitEthernet4",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:91:73",
+                    "time": "2023-05-24T11:46:57.984+00:00"
+                },
+                {
+                    "address": "10.0.5.1",
+                    "interface": "GigabitEthernet3",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-interface",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:b3:e5",
+                    "time": "2023-04-21T07:35:24.642+00:00"
+                },
+                {
+                    "address": "10.0.5.2",
+                    "interface": "GigabitEthernet3",
+                    "enctype": "ios-encaps-type-arpa",
+                    "type": "ios-linktype-ip",
+                    "mode": "ios-arp-mode-dynamic",
+                    "hwtype": "ios-snpa-type-ieee48",
+                    "hardware": "00:50:56:ac:b8:78",
+                    "time": "2023-05-24T09:33:46.066+00:00"
+                }
+            ]
+        }
+    ]
+}

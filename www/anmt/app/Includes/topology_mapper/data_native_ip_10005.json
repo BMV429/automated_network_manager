@@ -1,0 +1,51 @@
+{
+    "Cisco-IOS-XE-native:ip": {
+        "domain": {
+            "name": "rtp.cisco.com"
+        },
+        "forward-protocol": {
+            "protocol": "nd"
+        },
+        "name-server": {
+            "no-vrf": [
+                "8.8.8.8"
+            ]
+        },
+        "route": {
+            "ip-route-interface-forwarding-list": [
+                {
+                    "prefix": "0.0.0.0",
+                    "mask": "0.0.0.0",
+                    "fwd-list": [
+                        {
+                            "fwd": "10.0.0.1"
+                        }
+                    ]
+                }
+            ]
+        },
+        "ssh": {
+            "authentication-retries": 2,
+            "rsa": {
+                "keypair-name": "ssh-key"
+            },
+            "time-out": 60,
+            "version": 2
+        },
+        "Cisco-IOS-XE-aaa:radius": {
+            "source-interface": {
+                "GigabitEthernet": "1"
+            }
+        },
+        "Cisco-IOS-XE-http:http": {
+            "authentication": {
+                "local": [
+                    null
+                ]
+            },
+            "server": true,
+            "secure-server": true,
+            "secure-trustpoint": "TP-self-signed-1312355668"
+        }
+    }
+}

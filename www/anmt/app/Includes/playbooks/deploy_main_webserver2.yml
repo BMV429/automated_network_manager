@@ -1,0 +1,199 @@
+---
+
+    - name: Install latest nginx version
+      apt: name=nginx state=latest
+      
+    - name: Install PHP Sqlite3 mod package
+      apt: name=php8.2-sqlite3 state=latest
+
+    - name: Configure firewall
+      shell:
+        cmd: ufw allow 'Nginx HTTP'
+
+    - name: Create webpage directory
+      shell:
+        cmd: mkdir -p "{{ web_dir }}"/html
+
+    - name: Change permissions of web dir (1/2)
+      shell:
+        cmd: chown -R $USER:$USER "{{ web_dir }}"
+
+    - name: Change permissions of web dir (2/2)
+      shell:
+        cmd: chmod -R 755 "{{ web_dir }}"
+
+  #  - name: Place webserver files (index.html, ...) # vervangen door rsync hieronder 
+  #    copy:
+  #      src: /home/sb/automated_network_manager/www/anmt/
+  #      dest: "/var/www/{{ domain_name }}/html/{{ domain_name }}/"
+        
+    - name: pput files in place 
+      shell:
+         cmd: sudo rsync -a /home/sb/automated_network_manager/www/anmt/ /var/www/{{ domain_name }}/html/{{ domain_name }}/
+           
+    - name: Add group
+      shell:
+        cmd: groupadd {{ domain_name }}_user
+      ignore_errors: yes
+
+    - name: Add user
+      shell:
+        cmd: useradd -g {{ domain_name }}_user {{ domain_name }}_user
+      ignore_errors: yes
+
+    - name: Create file with ownership and permissions
+      file:
+        path: /var/www/{{ domain_name }}/html/{{ domain_name }}/app/Includes/manual_devices.json
+        owner: anmt_user
+        group: anmt_user
+        mode: '0755'
+        state: touch
+
+    - name: Put /etc/nginx/sites-available/xxxx
+      template:
+        src: /home/sb/automated_network_manager/templates/anmt.j2
+        dest: "/etc/nginx/sites-available/{{ domain_name }}"
+
+
+###
+
+    - name: Change ownership of 
+      file:
+        path: /home/sb/automated_network_manager/scripts/install_php_composer.sh
+        owner: sb
+        group: sb
+
+    - name: Set permission for the file
+      file:
+        path: /home/sb/automated_network_manager/scripts/install_php_composer.sh
+        mode: 777
+
+    - name: Run script to get composer 
+      script: /home/sb/automated_network_manager/scripts/install_php_composer.sh
+      ignore_errors: yes
+
+    - name: move composer.phar #if preveos does  not work  
+      shell:
+        cmd: sudo mv /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/composer.phar /usr/local/bin/composer
+      ignore_errors: yes
+      
+    - name: Change ownership of 
+      file:
+        path: /var/www/anmt/html/anmt/composer.json
+        owner: sb
+        group: sb
+
+    - name: Set permission for the file
+      file:
+        path:  /var/www/anmt/html/anmt/composer.json
+        mode: 777
+      
+      
+#    - name: composer create   
+#      shell:
+#        cmd: composer require symfony/process
+#      args:
+#        chdir: /var/www/anmt/html/anmt/
+
+    - name: Install Symfony Process package
+      become: yes
+      shell: >
+        sudo composer require --no-interaction symfony/process
+      args:
+        chdir: /var/www/anmt/html/anmt/
+      ignore_errors: yes        
+
+    - name: Put /etc/nginx/sites-available/xxxx
+      template:
+        src: /home/sb/automated_network_manager/templates/env.j2
+        dest: "/var/www/anmt/html/anmt/.env"
+      
+ #   - name: Move file to remote server
+ #     become: yes
+ #     copy:
+ #       src: /home/sb/anmt
+ #       dest: /var/www/anmt/html/anmt
+ 
+    - name: Create a file
+      file:
+        path: /var/www/anmt/html/anmt/storage/logs/laravel.log
+        state: touch
+
+    - name: Change file mode of directory and its contents
+      file:
+        path: /var/www/anmt/
+        state: directory
+        recurse: yes
+        mode: '0777'
+        owner: anmt_user
+        group: anmt_user
+
+    - name: php artisan cache:clear
+      shell:
+        cmd: php artisan cache:clear
+      args:
+        chdir: /var/www/anmt/html/anmt/        
+      ignore_errors: yes
+
+###
+
+
+    - name: Create soft link for previous file
+      shell:
+        cmd: ln -s "/etc/nginx/sites-available/{{ domain_name }}" "/etc/nginx/sites-enabled/{{ domain_name }}"
+      ignore_errors: yes
+
+    - name: Put /etc/nginx/nginx.conf
+      template:
+        src: /home/sb/automated_network_manager/templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+
+    - name: Create directory
+      file:
+        path: /etc/nginx/ssl
+        state: directory
+
+    - name: Change directory permissions
+      file:
+        path: /etc/nginx/ssl
+        mode: "0700"
+
+    - name: Generate SSL certificate and key
+      command: sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/example.key -out /etc/nginx/ssl/example.crt -subj "/C=BE/ST=Antwerpen/L=Edegem/O=Interligo/OU=IT Department/CN=www.anmt.com/emailAddress=webmaster@example.com"
+
+    - name: Restart nginx
+      action: service name=nginx state=restarted
+
+    - name: Install latest php-fmp version
+      apt: name=php8.2-fpm state=latest
+
+# Did not change / use this template.
+#    - name: Put /etc/php/7.4/fpm/pool.d/www.conf
+#      template:
+#        src: /home/sb/automated_network_manager/templates/nginx_www.conf.j2
+#        dest: /etc/php/7.4/fpm/pool.d/www.conf
+
+
+
+    - name: Put /etc/php/8.2/fpm/pool.d/phpu_pool.conf
+      template:
+        src: /home/sb/automated_network_manager/templates/nginx_phpu_pool.conf.j2
+        dest: /etc/php/8.2/fpm/pool.d/phpu_pool.conf
+
+    - name: Put /etc/php/8.2/fpm/pool.d/phpu_pool.conf
+      copy:
+        src: /home/sb/automated_network_manager/templates/www.conf.j2
+        dest: /etc/php/8.2/fpm/pool.d/www.conf
+      ignore_errors: yes  
+
+    - name: Restart php-fpm service
+      action: service name=php8.2-fpm state=restarted
+
+    - name: Replace database configuration setting
+      replace:
+        path: /var/www/anmt/html/anmt/config/database.php
+        regexp: "'database' => env\\('DB_DATABASE',\\s*database_path\\('database.sqlite'\\)\\),"
+        replace: "'database' => '/var/www/anmt/html/anmt/database/anmt.db',"
+
+    - name: Restart nginx service
+      action: service name=nginx state=restarted

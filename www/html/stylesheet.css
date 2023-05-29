@@ -1,0 +1,65 @@
+#topology_map {
+	height: 600px;
+}
+
+.main_wrapper {
+	display: flex;
+	flex-direction: column;
+	border: solid blue 3px;
+}
+
+.title_wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	text-align: center;
+}
+
+.center_wrapper {
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
+	border: solid black 3px;
+	max-height: 80%;
+}
+
+#new_device_form_wrapper {
+	width: 50%;
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border: solid red 3px;
+}
+
+.device_table_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	overflow-y: scroll;
+	max-height: 80%;
+	border: solid green 3px;
+}
+
+.device_table_wrapper table {
+	width: 80%;
+}
+
+#playbooks_list_wrapper {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 40%;
+}
+
+#button_panel {
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+}
+
+.topology_map_wrapper {
+	width: 40%;
+}

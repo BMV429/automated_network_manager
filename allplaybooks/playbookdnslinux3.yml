@@ -1,0 +1,39 @@
+- name: Example playbook with user input for host
+  hosts: localhost
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    ansible_become_password: sb
+    ansible_ssh_pass: sb
+  #vars_prompt:
+  #  - name: hostname
+  #    prompt: "Enter the hostname that needs to be changed:"
+  #    private: no
+  #  - name: dns_server_ip
+  #    prompt: "Enter the new DNS server's IP address: "
+  #    private: no
+
+  tasks:
+    - name: Copy config.xml to temporary directory
+      fetch:
+        src: /etc/netplan/00-installer-config.yaml
+        dest: /tmp/
+      become: yes
+      delegate_to: "{{hostname}}"
+
+    - name: Replace DNS server IP address
+      replace:
+        path: /tmp/localhost/etc/netplan/00-installer-config.yaml
+        regexp: 'addresses:\s+-\s+\b(?!.*\/)\d+\.\d+\.\d+\.\d+\b'
+        replace: "addresses:\n        - {{ dns_server_ip }}"
+
+    - name: Copy modified netplan to permanent location
+      copy:
+        src: /tmp/localhost/etc/netplan/00-installer-config.yaml
+        dest: /etc/netplan/00-installer-config.yaml
+      delegate_to: "{{hostname}}"
+
+    - name: Apply network configuration
+      command: netplan apply
+      delegate_to: "{{hostname}}"

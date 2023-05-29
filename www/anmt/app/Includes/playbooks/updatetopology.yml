@@ -1,0 +1,34 @@
+---
+- name: Use encrypted secret 1
+  hosts: localhost
+
+  vars:
+      ip_list: []
+      name_list: []
+  
+  vars_files:
+    - secrets.yml
+
+
+  tasks:
+    - name: Read lines from file
+      ansible.builtin.shell: cat /home/sb/ip.txt
+      register: file_contents
+
+    - name: Loop over lines
+      ansible.builtin.set_fact:
+        ip_list: "{{ ip_list + [item.split()[0]] }}"
+        name_list: "{{ name_list + [item.split()[1]] }}"
+      loop: "{{ file_contents.stdout_lines }}"
+
+    - name: Print IP and name lists
+      debug:
+        msg:
+          - "IP list: {{ ip_list }}"
+          - "Name list: {{ name_list }}"
+
+
+    - name: test shell comamnd
+      debug:
+        msg:
+          - "python3 /home/sb/automated_network_manager/topology_mapper/mapper_main.py {{ ip_list }} {{ name_list }} {{ my_secret_1 }}"

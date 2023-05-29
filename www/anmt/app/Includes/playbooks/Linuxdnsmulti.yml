@@ -1,0 +1,25 @@
+- name: Example playbook with user input for host
+  hosts: Linux
+  become: true
+  become_method: sudo
+  gather_facts: false
+
+  tasks:
+    - name: Fetch dns_server.txt file
+      fetch:
+        src: /etc/netplan/00-installer-config.yaml
+        dest: "/home/anmt_user/{{ inventory_hostname }}_dns_server.txt"
+
+    - name: Extract DNS server from file
+      shell: "head -10 /home/anmt_user/{{ inventory_hostname }}_dns_server.txt | tail -1 > /home/sb/new_dns_server.txt"
+      delegate_to: localhost
+  
+  
+    - name: Replace DNS server IP address
+      replace:
+        path: /etc/netplan/00-installer-config.yaml
+        regexp: 'addresses:\s+-\s+\b(?!.*\/)\d+\.\d+\.\d+\.\d+\b'
+        replace: "addresses:\n        - {{ dns_server_ip }}"
+
+    - name: Apply network configuration
+      command: netplan apply

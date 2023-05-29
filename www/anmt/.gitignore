@@ -1,0 +1,6 @@
+#**/.env
+#./database/anmt.db
+storage/app/secr.txt
+public/topology_*.html
+.DS_Store
+#**/manual_hosts.json

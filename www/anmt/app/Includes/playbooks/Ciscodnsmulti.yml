@@ -1,0 +1,28 @@
+---
+- name: Change DNS server on Cisco router
+  hosts: IOS
+  gather_facts: no
+
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_become: yes
+    ansible_become_method: enable
+
+  tasks:
+    - name: Get previous DNS server IP
+      cisco.ios.ios_command:
+        commands:
+          - "show run | include ip name-server"
+      register: show_output
+
+    - name: Create a file
+      copy:
+        dest: /home/anmt_user/DNSSERVERMULTI.txt
+        content: "{{ show_output.stdout_lines }}"
+      delegate_to: localhost
+
+    - name: configure name servers
+      cisco.ios.ios_system:
+        name_servers:
+        - "{{ dns_server_ip }}"

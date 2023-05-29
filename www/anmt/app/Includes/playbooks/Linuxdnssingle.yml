@@ -1,0 +1,75 @@
+- name: Example playbook with user input for host
+  hosts: localhost
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars:
+    ansible_become_password: sb
+    ansible_ssh_pass: sb
+    domain_user: anmt_user
+  #vars_prompt:
+  #  - name: hostname
+  #    prompt: "Enter the hostname that needs to be changed:"
+  #    private: no
+  #  - name: dns_server_ip
+  #    prompt: "Enter the new DNS server's IP address: "
+  #    private: no
+
+  tasks:
+#    - name: Make temp_dir
+#      command: mkdir -p /tmp/localhost
+#      delegate_to: "{{ client_ip }}"
+      
+#    - name: Create python link if it does not exist
+#      command: sh -c '[ -f "/usr/bin/python" ] && echo "Python exists." || ln -s /usr/bin/python3 /usr/bin/python'
+#      delegate_to: "{{ client_ip }}"
+      
+      
+#    - name: Change ownership of tmp folder
+#      shell:
+#        cmd: chown -R {{ domain_user }}:{{ domain_user }} /tmp
+        
+#    - name: Copy config.xml to temporary directory
+#      fetch:
+#        src: /etc/netplan/00-installer-config.yaml
+#        dest: /tmp/
+#      become: yes
+#      delegate_to: "{{ client_ip }}"
+
+#    - name: Replace DNS server IP address
+#      replace:
+#        path: /tmp/localhost/etc/netplan/00-installer-config.yaml
+#        regexp: 'addresses:\s+-\s+\b(?!.*\/)\d+\.\d+\.\d+\.\d+\b'
+#        replace: "addresses:\n        - {{ dns_server_ip }}"
+ 
+#    - name: Copy modified netplan to permanent location
+#      copy:
+#        src: /tmp/localhost/etc/netplan/00-installer-config.yaml
+#        dest: /etc/netplan/00-installer-config.yaml
+#      delegate_to: "{{ client_ip }}"
+
+#    - name: Apply network configuration
+#      command: netplan apply
+#      delegate_to: "{{ client_ip }}"
+
+
+    - name: Fetch dns_server.txt file
+      fetch:
+        src: /etc/netplan/00-installer-config.yaml
+        dest: "/home/anmt_user/{{ inventory_hostname }}_dns_server.txt"
+      delegate_to: "{{ client_ip }}"
+
+    - name: Extract DNS server from file
+      shell: "head -10 /home/anmt_user/{{ inventory_hostname }}_dns_server.txt | tail -1 > /home/sb/new_dns_server.txt"
+      delegate_to: localhost
+  
+    - name: Replace DNS server IP address
+      replace:
+        path: /etc/netplan/00-installer-config.yaml
+        regexp: 'addresses:\s+-\s+\b(?!.*\/)\d+\.\d+\.\d+\.\d+\b'
+        replace: "addresses:\n        - {{ dns_server_ip }}"
+      delegate_to: "{{ client_ip }}"
+      
+    - name: Apply network configuration
+      command: netplan apply
+      delegate_to: "{{ client_ip }}"      

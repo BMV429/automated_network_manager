@@ -1,0 +1,102 @@
+Starting Nmap 7.92 ( https://nmap.org ) at 2023-02-23 12:25 UTC
+Stats: 0:00:44 elapsed; 247 hosts completed (9 up), 9 undergoing SYN Stealth Scan
+SYN Stealth Scan Timing: About 98.84% done; ETC: 12:26 (0:00:00 remaining)
+Stats: 0:00:44 elapsed; 247 hosts completed (9 up), 9 undergoing SYN Stealth Scan
+SYN Stealth Scan Timing: About 99.38% done; ETC: 12:26 (0:00:00 remaining)
+Nmap scan report for 10.0.0.0
+Host is up (0.00072s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT    STATE  SERVICE
+80/tcp  open   http
+179/tcp closed bgp
+443/tcp open   https
+646/tcp closed ldp
+Device type: general purpose|storage-misc
+Running (JUST GUESSING): Linux 4.X|5.X|3.X|2.6.X (90%), Synology DiskStation Manager 5.X (87%)
+OS CPE: cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel:3 cpe:/a:synology:diskstation_manager:5.2 cpe:/o:linux:linux_kernel:2.6.32
+Aggressive OS guesses: Linux 4.15 - 5.6 (90%), Linux 5.0 - 5.3 (88%), Linux 5.0 - 5.4 (88%), Linux 5.4 (88%), Linux 3.2 - 4.9 (88%), Synology DiskStation Manager 5.2-5644 (87%), Linux 2.6.32 (86%), Linux 3.4 - 3.10 (86%), Linux 2.6.32 - 3.10 (85%), Linux 3.10 (85%)
+No exact OS matches for host (test conditions non-ideal).
+
+Nmap scan report for 10.0.0.1
+Host is up (0.00052s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+53/tcp  open  domain
+80/tcp  open  http
+443/tcp open  https
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose
+Running (JUST GUESSING): FreeBSD 11.X (93%)
+OS CPE: cpe:/o:freebsd:freebsd:11.2
+Aggressive OS guesses: FreeBSD 11.2-RELEASE (93%)
+No exact OS matches for host (test conditions non-ideal).
+
+Nmap scan report for 10.0.0.2
+Host is up (0.00058s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+5357/tcp open  wsdapi
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Microsoft Windows 10 1709 - 1909
+Network Distance: 2 hops
+
+Nmap scan report for 10.0.0.3
+Host is up (0.00048s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+5357/tcp open  wsdapi
+Device type: general purpose
+Running: Microsoft Windows 10
+OS CPE: cpe:/o:microsoft:windows_10
+OS details: Microsoft Windows 10 1709 - 1909
+Network Distance: 2 hops
+
+Nmap scan report for 10.0.0.5
+Host is up (0.0012s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+OS details: Cisco 836, 890, 1751, 1841, 2800, or 2900 router (IOS 12.4 - 15.1), Cisco Aironet 1141N (IOS 12.4) or 3602I (IOS 15.3) WAP, Cisco Aironet 2600-series WAP (IOS 15.2(2))
+
+Nmap scan report for 10.0.0.21
+Host is up (0.00065s latency).
+All 1000 scanned ports on 10.0.0.21 are in ignored states.
+Not shown: 1000 filtered tcp ports (no-response)
+Too many fingerprints match this host to give specific OS details
+
+Nmap scan report for 10.0.0.22
+Host is up (0.00063s latency).
+All 1000 scanned ports on 10.0.0.22 are in ignored states.
+Not shown: 1000 filtered tcp ports (no-response)
+Too many fingerprints match this host to give specific OS details
+
+Nmap scan report for 10.0.0.23
+Host is up (0.00081s latency).
+All 1000 scanned ports on 10.0.0.23 are in ignored states.
+Not shown: 1000 filtered tcp ports (no-response)
+Too many fingerprints match this host to give specific OS details
+
+Nmap scan report for 10.0.0.255
+Host is up (0.00072s latency).
+Not shown: 996 filtered tcp ports (no-response)
+PORT    STATE  SERVICE
+80/tcp  open   http
+179/tcp closed bgp
+443/tcp open   https
+646/tcp closed ldp
+Aggressive OS guesses: Linux 4.15 - 5.6 (90%), Linux 5.0 - 5.4 (89%), Linux 5.0 - 5.3 (89%), Linux 5.4 (88%), Linux 3.2 - 4.9 (88%), Synology DiskStation Manager 5.2-5644 (87%), Linux 2.6.32 (86%), Linux 3.4 - 3.10 (86%), Linux 2.6.32 - 3.10 (85%), Linux 5.3 - 5.4 (85%)
+No exact OS matches for host (test conditions non-ideal).
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 256 IP addresses (9 hosts up) scanned in 57.14 seconds

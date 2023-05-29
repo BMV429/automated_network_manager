@@ -1,0 +1,201 @@
+import re
+import xml.etree.ElementTree as ET
+
+ip_list=[]
+os_list=[]
+
+# SNMP IP list (subnet 1)
+with open("nmap.xml") as f:
+	for line in f.readlines():
+		x = re.search(r'(?<=\<address addr=")\d{,3}\.\d{,3}\.\d{,3}\.\d{,3}', line)
+		if (x):
+			ip=x.group()
+			if (ip not in ip_list):
+				ip_list.append(ip)
+
+# SNMP IP list (subnet 2)
+with open("nmap2.xml") as f:
+	for line in f.readlines():
+		x = re.search(r'(?<=\<address addr=")\d{,3}\.\d{,3}\.\d{,3}\.\d{,3}', line)
+		if (x):
+			ip=x.group()
+			if (ip not in ip_list):
+				ip_list.append(ip)
+
+
+
+
+
+
+
+
+
+
+
+
+# Get output from nmap.xml and put the important information in a list of hosts (dictionaries).
+tree = ET.parse('nmap3.xml')
+root = tree.getroot()
+hosts=[]
+
+for child in root:
+    if child.tag == "host":
+        #print(child.tag, child.attrib)
+        #print("\n")
+        ip_address = os_vendor = os_family = os_gen = ""
+        for child_two in child:
+            #print("\n\n")
+            #print("\t", child_two.tag, child_two.attrib)
+            if child_two.tag == "address":
+                ip_address = child_two.attrib.get('addr')
+  #              print(f"IP = {ip_address}") 
+            if child_two.tag == "os":
+                i=0
+                for child_three in child_two:
+                    #print("\t\t", child_three.tag, child_three.attrib)
+                    if child_three.tag == "osmatch" and i == 0:
+                        #print(child_three.attrib.get("name"))
+                        i+=1
+                        
+                        j=0
+                        for osclass in child_three:
+                            if osclass.tag == "osclass" and j == 0:
+                                os_vendor = osclass.attrib.get('vendor')
+                                os_family = osclass.attrib.get('osfamily')
+                                os_gen = osclass.attrib.get('osgen')
+
+ #                               print (f"\tos_vendor = {os_vendor}\n\tos_family = {os_family}\n\tos_gen = {os_gen}")
+                                
+                                j+=1
+        
+        
+        host = dict(ip_address = ip_address, os_vendor = os_vendor, os_family = os_family, os_gen = os_gen)
+            
+        hosts.append(host)
+
+
+
+## Write hosts to hosts.txt.
+
+with open("hosts.txt", "w") as f:
+    #host_group_options = ["Linux", "Windows", "FreeBSD", "Cisco"]
+    
+    host_group_options = []
+    for host in hosts:
+        host_group_option = host.get("os_family")
+        
+        if (host_group_option == ""):
+            host_group_option = "unassigned"
+        
+        if (host_group_option not in host_group_options):
+            host_group_options.append(host_group_option)
+
+            
+        
+    for option in host_group_options:
+        f.write("\n\n")
+        f.write(f"[{option}]")
+            
+        for host in hosts:
+            host_group = host.get("os_family")
+            if (host_group == ""):
+                host_group = "unassigned"
+
+            if (host_group == option):
+                host_ip = host.get("ip_address")
+                f.write(f"\n{host_ip}")
+
+        
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print(hosts)
+# OS list (subnet 1)
+#with open("nmap3.xml") as f:
+#        for line in f.readlines():
+#                y = re.search(r'(?<=\<osclass type="general purpose" vendor=")[a-zA-Z0-9]{,14}[^"]', line)
+#                z = re.search(r'(?<=accuracy=")\d{,3}(?=>")', line)
+#                if (y):
+#                        os=y.group()
+#                if (z):
+#                        accuracy=z.group()
+#                       
+#                if (os not in os_list):
+#                    os_list.append(os)
+#                print(f"{os} ({accuracy})")
+#                os_list.append(os)
+                        
+
+
+
+
+
+#print("Goodbye, World!")
+#ip_list.sort()
+#print(ip_list)
+#print(os_list)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+with open("target.json", "w") as f:
+        f.write('[\n]')
+        for ip_record in ip_list:
+            f.write('\n\t{\n\t\t"targets": ["' + ip_record + '"],')
+            f.write('\n\t\t"labels": {"job": "node"}\n\t}')
+            if (ip_record != ip_list[-1]):
+                f.write(',')
+
+
+with open("ip.txt", "w") as f:
+
+        f.write('\n')
+
+        for ip_record in ip_list:
+
+            f.write(ip_record)
+
+            if (ip_record != ip_list[-1]):
+
+                f.write('\n')

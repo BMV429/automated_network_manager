@@ -1,0 +1,395 @@
+--- 
+  - name: get rights
+    hosts: localhost
+    become: true
+    become_method: sudo
+    vars:
+      
+        ansible_become_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          636666646535303631633736346136393935306437613863333932376266333663396236656463666632376436653034386539383337623737316632356233330a656638343238633662616461306537366335636636643539363437393163366664653461653035303733623461623264643232613065396131616434353462350a3266383537353939336238323138336432313839373739636362666439343261
+          
+        my_pass: '!vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          636563313566313866383331313937323465373066333562626666326332653932383865383664643537373030326363316137636139643666346636633030300a353066643566333263646564343830316638353331316164633639326637333339656363376333636636356133396431336166313263323031313130633435630a3362343866326265326566393264653962663736353131626639373730303932'
+          
+        my_pass2: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32653337633534656139653136383632323337396534393339643738656338353866343533306666
+          6530666131366430356231663437353638636338313030610a363939623939326663626430343966
+          65633761373731653963643961313237623235643339316335663062386563356662623739636538
+          3434336262396561370a303964303034666266656130306638383036373165656463313532303235
+          3637
+
+    tasks:
+      - name: install all programs
+        apt:
+          name: 
+          - prometheus
+          - nmap
+          - rpm
+          - python3-pip
+          - nginx  
+          - whois
+          - sshpass 
+          - software-properties-common
+          state: present
+
+      - name: Install nmap RPM package
+        shell: sudo rpm -vhU --nodeps https://nmap.org/dist/nmap-7.92-1.x86_64.rpm
+        ignore_errors: yes
+         
+ ##php installs        
+      - name: Install repo
+        shell: sudo add-apt-repository -y ppa:ondrej/php
+        
+      - name: Install update
+        shell: sudo apt-get update        
+         
+      - name: Install php
+        shell: sudo apt install -y php8.2       
+         
+      - name: Install php-curl
+        shell: sudo apt install -y curl 
+        
+      - name: Install php-curl
+        shell: sudo apt install -y php-curl           
+         
+      - name: Install php-xml
+        shell: sudo apt-get install -y php-xml     
+
+ ##        
+         
+
+      - name: Install required Python packages
+        pip:
+          name:
+            - paramiko==2.6.0
+            - markupsafe==2.0.1
+
+      - name: Install required Python packages
+        pip:
+          name:
+            - pyvis
+            - networkx
+            - pandas
+            - requests
+            - pillow
+            - prometheus-client
+
+#      - name: Copy folder and its files
+#        copy:
+#          src: /home/sb/repo/prometheus.yml
+#          dest: /etc/prometheus/prometheus.yml
+ 
+      - name: Put prometheus.yml in place
+        template:
+          src: /home/sb/automated_network_manager/templates/prometheus.yml.j2
+          dest: /etc/prometheus/prometheus.yml
+ 
+#      - name: Copy folder and its files
+#        copy:
+#          src: /home/sb/repo/network_scan
+#          dest: /home/sb
+
+#      - name: Set file mode to 777
+#        file:
+#          path: /home/sb/network_scan/get_snmp_host.sh
+#          mode: "777"
+
+#      - name: Set file mode to 777
+#        file:
+#          path: /home/sb/network_scan/get_snmp_host.py
+#          mode: "777"
+
+#      - name: Change ownership of directory
+#        file:
+#          path: /home/sb/network_scan
+#          owner: sb
+#          group: sb
+
+      - name: Set file mode to 777
+        file:
+          path: /home/sb/automated_network_manager/network_scan/get_snmp_host.sh
+          mode: "777"
+
+      - name: Set file mode to 777
+        file:
+          path: /home/sb/automated_network_manager/network_scan/get_snmp_host.py
+          mode: "777"
+
+      - name: Set file mode to 777
+        file:
+          path: /home/sb/automated_network_manager/topology_mapper/check_device_existence.py
+          mode: "777"
+          
+      - name: Set file mode to 777
+        file:
+          path: /home/sb/automated_network_manager/topology_mapper/ping_device.sh
+          mode: "777"
+          
+#      - name: remove file                     # kan later weg 
+#        file:
+#         path: /home/sb/network_scan/nmap.xml
+#         state: absent   
+  
+      - name: Run script get_snmp_host.sh
+        script: /home/sb/automated_network_manager/network_scan/get_snmp_host.sh
+
+#      - name: remove file                      #kan later weg 
+#        file:
+#         path: /home/sb/network_scan/hosts.txt
+#         state: absent
+
+      - name: Copy folder and its files #waarom deze file hier word uitgelezen en niet in de map van   
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/nmap.xml
+          dest: /home/sb/
+
+      - name: Include other playbook
+        vars:
+          domain_name: "anmt"
+          web_dir: "/var/www/anmt"
+        include: deploy_main_webserver2.yml
+
+      - name: Change ownership of directory   
+        file:
+          path: /home/sb/automated_network_manager
+          owner: anmt_user
+          group: anmt_user
+          recurse: yes
+
+      - name: Create home directory for anmt_user
+        file:
+          path: /home/anmt_user
+          state: directory
+          owner: anmt_user
+          group: anmt_user
+          mode: '0755'
+
+      - name: Change line in /etc/passwd for anmt_user
+        lineinfile:
+          path: /etc/passwd
+          regexp: "^anmt_user:"
+          line: "anmt_user:x:1001:1001::/home/anmt_user:/bin/bash" 
+
+      - name: Add anmt_user to sudoers file
+        lineinfile:
+          path: /etc/sudoers
+          line: "anmt_user ALL=(ALL:ALL) ALL"
+          validate: "visudo -cf %s"      
+
+      - name: Generate hashed password
+        shell: mkpasswd --method=SHA-512 --salt=$(head -c 8 /dev/urandom | base64 | tr -d '+/=' | head -c 8) $(echo {{ my_pass }})
+        register: hashed_password
+
+      - name: Set new password for  user
+        user:
+          name: anmt_user
+          password: "{{ hashed_password.stdout }}"
+
+   #   - name: Run pip install command #####opgelost maar laat toch maar staan 
+   #     shell: echo "{{ hashed_password.stdout }}" | su -c "pip3 install -r /home/sb/automated_network_manager/topology_mapper/requirements.txt" anmt_user
+   
+   #   - name: Run pip install command       ###### opgelost maar laat toch maar staan 
+   #     shell: pip3 install -r /home/sb/automated_network_manager/topology_mapper/requirements.txt 
+              
+      - name: Create home directory for anmt_user
+        file:
+          path: /home/anmt_user/.ssh
+          state: directory
+          owner: anmt_user
+          group: anmt_user
+          mode: '0755'
+
+      - name: Create home directory for anmt_user
+        file:
+          path: /home/anmt_user/.ssh/known_hosts
+          owner: anmt_user
+          group: anmt_user
+          mode: '0755'
+          state: touch
+          
+      - name: Create file /path/to/file.txt with ownership and permissions
+        file:
+          path: /home/anmt_user/.ssh/known_hosts
+          owner: anmt_user
+          group: anmt_user
+          mode: '0755'
+          state: touch
+        
+#mss later als we alles willen laten werken op anmt user
+#      - name: Copy folder and its files 
+#        copy:
+#          src: /home/sb/automated_network_manager
+#         dest: /home/anmt_user/automated_network_manager         
+        
+      - name: run python script
+        command: python3 /home/sb/automated_network_manager/network_scan/get_snmp_host.py   
+
+      - name: Run keyscan
+        shell: su -c "ssh-keyscan -f /home/sb/automated_network_manager/network_scan/keyscan.txt -H >>  /home/anmt_user/.ssh/known_hosts" anmt_user
+        
+      - name: Read source file contents
+        slurp:
+          src: /home/sb/automated_network_manager/network_scan/hosts.txt
+        register: source_contents
+
+      - name: Append source file contents to destination file
+        lineinfile:
+          dest: /etc/ansible/hosts
+          insertafter: EOF
+          line: "{{ source_contents.content | b64decode }}"
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/target.json
+          dest: /etc/prometheus/       
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/targetlinux.json
+          dest: /etc/prometheus/     
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/targetwindows.json
+          dest: /etc/prometheus/     
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/targetpfsense.json
+          dest: /etc/prometheus/     
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/network_scan/targetcisco.json
+          dest: /etc/prometheus/     
+
+      - name: Create directory
+        file:
+          path: /home/sb/prometheusdata
+          state: directory
+          owner: prometheus
+          group: prometheus
+
+      - name: Copy folder and its files 
+        copy:
+          src: /home/sb/automated_network_manager/service.txt
+          dest: /lib/systemd/system/prometheus.service
+
+      - name: Reload systemd daemon
+        systemd:
+          daemon_reload: yes
+
+      - name: Stop service
+        systemd:
+          name: prometheus
+          state: stopped   
+
+      - name: Start service
+        systemd:
+          name: prometheus
+          state: started
+     
+      - name: git download
+        get_url:
+          url: https://github.com/prometheus/snmp_exporter/releases/download/v0.21.0/snmp_exporter-0.21.0.linux-amd64.tar.gz
+          dest: /home/sb/repo
+
+      - name: Extract tar archive
+        unarchive:
+          src: /home/sb/repo/snmp_exporter-0.21.0.linux-amd64.tar.gz
+          dest: /home/sb/repo/
+
+#      - name: Copy folder and its files  #niet nodig meer normaal run de exporter in de playbookfile
+#        copy:
+#          src: /home/sb/repo/snmp.yml
+#          dest: /home/sb/repo/snmp_exporter-0.21.0.linux-amd64/snmp.yml   
+
+#      - name: Copy 
+#        copy:
+#          src: /home/sb/repo/snmp.yml
+#          dest: /home/sb/snmp.yml
+
+      - name: Copy 
+        copy:
+          src: /home/sb/repo/snmp.yml
+          dest: /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/snmp.yml   
+
+      - name: Copy 
+        copy:
+          src: /home/sb/repo/snmp_exporter-0.21.0.linux-amd64/snmp_exporter  
+          dest: /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/snmp_exporter   
+
+      - name: Set file mode to 777
+        file:
+          path: /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/snmp_exporter 
+          mode: "777"
+
+      - name: Run script 
+        shell: /home/sb/automated_network_manager/www/anmt/app/Includes/playbooks/snmp_exporter 
+        async: 31536000
+        poll: 0
+
+#      - name: Copy file to target system    #kan later weg gewoon vervangen door prometheus.yml in github aan te passen met test.yml 
+#        copy:
+#          src: /home/sb/repo/test.yml
+#          dest: /etc/prometheus/prometheus.yml
+
+      - name: Stop service
+        systemd:
+          name: prometheus
+          state: stopped   
+
+      - name: Start service
+        systemd:
+          name: prometheus
+          state: started        
+
+      - name: Create soft link for previous file
+        shell:
+          cmd: ln -s "/var/www/anmt/html/anmt/app/Includes/topology_mapper/current_topology.html" "/var/www/anmt/html/anmt/public/current_topology.html"
+        ignore_errors: yes
+
+      - name: run python script
+        shell: python3 /home/sb/automated_network_manager/topology_mapper/mapper_main.py 10.0.0.5 bram {{ my_pass2 }} 
+                 
+      - name: Run keyscan  #KAN MSS LATER WEG 
+        shell: ssh-keyscan -f /home/sb/automated_network_manager/network_scan/keyscan.txt -H >>  /home/sb/.ssh/known_hosts          
+        
+      - name: install cisco.ios
+        shell: su -c "ansible-galaxy collection install cisco.ios" anmt_user   
+        
+      - name: install nexus module
+        shell: su -c "ansible-galaxy collection install cisco.nxos" anmt_user     
+        
+#      - name: Include other playbook          #dit is wel nodig 
+#        include: deploy_rsyslog_master2.yml
+        
+      - name: Create a cron job nmap scan 
+        cron:
+          name: "Run my script every 1 hour nmap "
+          minute: '0'
+          hour: '*'
+          job: "/home/sb/automated_network_manager/network_scan/get_snmp_host.sh"
+          user: anmt_user
+          state: present
+
+      - name: Create a cron job host file update
+        cron:
+          name: "Run my script every 1 hour hosts"
+          minute: '0'
+          hour: '*'
+          job: "/home/sb/automated_network_manager/network_scan/get_snmp_host.py"
+          user: anmt_user
+          state: present
+
+      - name: Create a cron job topologie mapper
+        cron:
+          name: "Run my script every 1 hour topologie"
+          minute: '0'
+          hour: '*'
+          job: "/home/sb/automated_network_manager/topology_mapper/mapper_main.py"
+          user: anmt_user
+          state: present        

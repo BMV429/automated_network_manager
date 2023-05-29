@@ -1,0 +1,89 @@
+---
+
+# Playbook to set up SNMPv3 with ansible on Linux.
+
+- name: Configure SNMPv3
+  hosts: linux
+  remote_user: sb
+  become: true
+  become_method: sudo
+  gather_facts: false
+  vars: # Put passwords in vault.
+    ansible_become_password: sb
+    github_user: BMV429
+    github_token: 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
+    git_repo_dir: "/home/sb/reposit"
+    snmp_username: sb
+    snmp_pass: sbsb2023
+  tasks:
+    - name: Install SNMP packages
+      apt: name=snmpd state=latest
+
+
+# --- This can be replaced with the local template.
+    - name: Retrieve config files
+      git:
+        repo: https://{{ github_user }}:{{ github_token }}@github.com/BMV429/automated_network_manager
+        dest: "{{ git_repo_dir }}"
+        clone: yes
+        update: yes
+
+    - name: Copy snmp.conf to the right locations
+      copy:
+        src: "{{ git_repo_dir }}/snmpd_linux/snmp.conf"
+        dest: /etc/snmp/snmp.conf
+        remote_src: true
+
+    - name: Copy snmpd.conf to the right locations
+      copy:
+        src: "{{ git_repo_dir }}/snmpd_linux/snmpd.conf"
+        dest: /etc/snmp/snmpd.conf
+        remote_src: true
+# ---
+
+
+    - name: Put snmp.conf in place
+      template:
+        src: snmp.conf.j2
+        dest: /etc/snmp/snmp.conf
+
+    - name: Put snmpd.conf in place
+      template:
+        src: snmpd.conf.j2
+        dest: /etc/snmp/snmpd.conf
+
+    - name: Put .../.snmp/snmp.conf in place
+      template:
+        src: snmp_credentials.conf.j2
+        dest: '~/.snmp/snmp.conf'
+
+    - name: Restart snmpd service
+      action: service name=snmpd state=restarted
+
+
+# --- DEBUG: Deleting users, otherwise the user keeps using the old password when re-running the script.
+    - name: Remove sb user from snmpusm
+      shell:
+        cmd: snmpusm localhost delete sb
+# ---
+
+
+    # Create user 'sb' from template 'temp_user'.
+    - name: Create snmp user
+      shell:
+        cmd: snmpusm -u temp_user -l authPriv -a MD5 -x DES -A {{ snmp_pass }} -X {{ snmp_pass }} localhost create {{ snmp_username }} temp_user
+      
+#    - name: Remove temporary user from conf (1/2)
+#      shell:
+#        cmd: sed -i "s/createUser temp_user MD5 {{ snmp_pass }} DES//" /etc/snmp/snmpd.conf
+        
+#    - name: Remove temporary user from conf (2/2)
+#      shell:
+#        cmd: sed -i "s/rwuser temp_user priv//" /etc/snmp/snmpd.conf
+
+#    - name: Restart snmpd service
+#      action: service name=snmpd state=restarted
+
+#    - name: Remove temp user from snmpusm
+#      shell:
+#        cmd: snmpusm localhost delete temp_user

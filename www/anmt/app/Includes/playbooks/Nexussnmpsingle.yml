@@ -1,0 +1,16 @@
+- name: Change dns server nexus switch
+  hosts: localhost
+  gather_facts: no 
+  
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: nxos
+    ansible_become: yes
+
+  tasks:
+    - name: Eneter configuration mode
+      nxos_command: 
+        commands:
+          - conf t
+          - snmp-server user {{ user }} v3 auth sha {{ authpass }} priv aes 128 {{ privpass }}
+      delegate_to: "{{ client_ip }}"      

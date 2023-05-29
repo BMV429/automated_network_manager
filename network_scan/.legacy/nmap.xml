@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.92 scan initiated Thu Feb 23 13:33:47 2023 as: nmap -sU -O -oX /home/sb/nmap.xml -p161 -&#45;script snmp-brute -&#45;script-args snmplist=community.lst 10.0.0.0/24 -->
+<nmaprun scanner="nmap" args="nmap -sU -O -oX /home/sb/nmap.xml -p161 -&#45;script snmp-brute -&#45;script-args snmplist=community.lst 10.0.0.0/24" start="1677159227" startstr="Thu Feb 23 13:33:47 2023" version="7.92" xmloutputversion="1.05">
+<scaninfo type="udp" protocol="udp" numservices="1" services="161"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.5" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.1" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.2" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.3" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.23" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.22" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.21" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.0" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="10.0.0.255" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="syn-ack" reason_ttl="64"/>
+<address addr="10.0.0.0" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os></os>
+<times srtt="359" rttvar="5000" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="10.0.0.1" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="63"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os></os>
+<times srtt="587" rttvar="1262" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="127"/>
+<address addr="10.0.0.2" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="127"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials&#xa;  private - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+<table>
+<elem key="password">private</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="38700"/>
+</os>
+<distance value="2"/>
+<times srtt="626" rttvar="210" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="126"/>
+<address addr="10.0.0.3" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="127"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials&#xa;  private - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+<table>
+<elem key="password">private</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os><portused state="closed" proto="udp" portid="33615"/>
+</os>
+<distance value="2"/>
+<times srtt="642" rttvar="273" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="255"/>
+<address addr="10.0.0.5" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open" reason="udp-response" reason_ttl="255"/><service name="snmp" method="table" conf="3"/><script id="snmp-brute" output="&#xa;  public - Valid credentials&#xa;  private - Valid credentials"><table>
+<elem key="password">public</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+<table>
+<elem key="password">private</elem>
+<elem key="state">Valid credentials</elem>
+</table>
+</script></port>
+</ports>
+<os></os>
+<times srtt="582" rttvar="359" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="62"/>
+<address addr="10.0.0.21" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os></os>
+<times srtt="683" rttvar="1664" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="62"/>
+<address addr="10.0.0.22" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os></os>
+<times srtt="650" rttvar="1636" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="echo-reply" reason_ttl="62"/>
+<address addr="10.0.0.23" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os></os>
+<times srtt="720" rttvar="1289" to="100000"/>
+</host>
+<host starttime="1677159231" endtime="1677159236"><status state="up" reason="syn-ack" reason_ttl="64"/>
+<address addr="10.0.0.255" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" method="table" conf="3"/></port>
+</ports>
+<os></os>
+<times srtt="436" rttvar="5000" to="100000"/>
+</host>
+<runstats><finished time="1677159237" timestr="Thu Feb 23 13:33:57 2023" summary="Nmap done at Thu Feb 23 13:33:57 2023; 256 IP addresses (9 hosts up) scanned in 10.20 seconds" elapsed="10.20" exit="success"/><hosts up="9" down="247" total="256"/>
+</runstats>
+</nmaprun>

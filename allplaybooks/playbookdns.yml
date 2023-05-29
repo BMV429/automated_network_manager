@@ -1,0 +1,18 @@
+---
+- name: Change DNS server of Windows client
+  hosts: Windows
+  gather_facts: no
+ # become: yes
+  vars:
+    ansible_user: sb
+    ansible_password: sb
+    ansible_connection: winrm
+    ansible_winrm_server_cert_validation: ignore
+    ansible_winrm_kerberos_delegation: true
+  tasks:
+    - name: Set DNS server
+      win_dns_client:
+        state: present
+        dns_servers:
+          - 192.168.1.100
+
